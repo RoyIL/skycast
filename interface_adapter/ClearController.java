@@ -1,2 +1,3 @@
-package interface_adapter;public class ClearController {
-}
+package interface_adapter;
+
+public class ClearController()

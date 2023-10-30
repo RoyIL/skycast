@@ -1,2 +1,4 @@
-package interface_adapter;public class ClearPresenter {
+package interface_adapter;
+
+public class ClearPresenter {
 }
