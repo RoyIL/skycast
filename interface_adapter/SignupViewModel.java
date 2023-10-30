@@ -3,29 +3,28 @@ package interface_adapter;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class LoginViewModel extends ViewModel {
-
+public class SignupViewModel extends ViewModel {
     /**
      * NOTICE: ALL STRING NAMES ARE TEMPORARY AND ONLY SERVE FOR TESTING FUNCTIONALITY OF
      * OUR FIRST USE CASE. THESE WILL BE UPDATED AS THE PROJECT PROGRESSES
      */
-    public final String TITLE_BOX = "Log In View";
+    public final String TITLE_BOX = "Signup View";
     public final String LOGIN_USERNAME_LABEL = "Enter username here...";
     public final String LOGIN_PASSWORD_LABEL = "Enter password here...";
+    public final String LOGIN_REP_PASSWORD_LABEL = "Repeat password here...";
 
-    public final String LOGIN_BUTTON_LABEL = "Log In";
-    public final String CANCEL_LOGIN_BUTTON_LABEL = "Cancel Login";
+    public final String LOGIN_BUTTON_LABEL = "Signup";
+    public final String CANCEL_LOGIN_BUTTON_LABEL = "Cancel Signup";
 
-    private LoginState windowState = new LoginState();
+    private SignupState windowState = new SignupState();
 
     private final PropertyChangeSupport checkerHelp = new PropertyChangeSupport(this);
 
-    LoginViewModel() {
-        super("log in");
-
+    public SignupViewModel() {
+        super("sign up");
     }
 
-    public void setWindowState(LoginState newWindowState) {
+    public void setWindowState(SignupState newWindowState) {
         this.windowState = newWindowState;
     }
 
@@ -33,11 +32,12 @@ public class LoginViewModel extends ViewModel {
         checkerHelp.firePropertyChange("windowState", null, this.windowState);
     }
 
-    public void addPropertyChangedListener(PropertyChangeListener myListener) {
-        checkerHelp.addPropertyChangeListener(myListener);
+    public void addPropertyChangedListener(PropertyChangeListener newListener) {
+        checkerHelp.addPropertyChangeListener(newListener);
     }
 
-    public LoginState getWindowState() {
+    public SignupState getWindowState() {
         return windowState;
     }
+
 }
