@@ -20,7 +20,7 @@ public class LoginViewModel extends ViewModel {
 
     private final PropertyChangeSupport checkerHelp = new PropertyChangeSupport(this);
 
-    LoginViewModel() {
+    public LoginViewModel() {
         super("log in");
 
     }

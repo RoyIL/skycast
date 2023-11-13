@@ -1,12 +1,16 @@
 package interface_adapter;
 
 public class LoggedInState {
-
-    LoggedInState(LoggedInState duplicate) {
-        // For duplication
+    private String username = "";
+    public LoggedInState(LoggedInState duplicate) {
+        username = duplicate.username;
     }
+    public LoggedInState() {}
 
-    LoggedInState() {
-        // empty initializer to differentiate from duplicator function
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

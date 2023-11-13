@@ -6,7 +6,7 @@ public class CommonUser implements User {
     private final String username;
     private final String password;
     private final LocalDateTime creationTime;
-    CommonUser(String inpUsername, String inpPassword, LocalDateTime inpCreationTime) {
+    public CommonUser(String inpUsername, String inpPassword, LocalDateTime inpCreationTime) {
         username = inpUsername;
         password = inpPassword;
         creationTime = inpCreationTime;

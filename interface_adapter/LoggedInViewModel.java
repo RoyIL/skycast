@@ -10,7 +10,7 @@ public class LoggedInViewModel extends ViewModel {
      */
     public final String TITLE_BOX = "Logged In View";
 
-    private SignupState windowState = new SignupState();
+    private LoggedInState windowState = new LoggedInState();
 
     private final PropertyChangeSupport checkerHelp = new PropertyChangeSupport(this);
 
@@ -18,7 +18,7 @@ public class LoggedInViewModel extends ViewModel {
         super("logged in");
     }
 
-    public void setWindowState(SignupState newWindowState) {
+    public void setWindowState(LoggedInState newWindowState) {
         this.windowState = newWindowState;
     }
 
@@ -30,7 +30,7 @@ public class LoggedInViewModel extends ViewModel {
         checkerHelp.addPropertyChangeListener(newListener);
     }
 
-    public SignupState getWindowState() {
+    public LoggedInState getWindowState() {
         return windowState;
     }
 }
