@@ -1,8 +1,6 @@
 package view;
 
-import interface_adapter.SignupController;
-import interface_adapter.SignupState;
-import interface_adapter.SignupViewModel;
+import interface_adapter.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,25 +8,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
-public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "sign up";
+public class LoginView {
+    public final String viewName = "login";
 
-    private final SignupViewModel signupViewModel;
+    private final LoginViewModel loginViewModel;
+
     private final JTextField usernameInputField = new JTextField(15);
+
     private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
-    private final SignupController signupController;
 
-    private final JButton signUp;
+    private final LoginController loginController;
+
+    private final JButton login;
+
     private final JButton cancel;
-
     public SignupView(SignupController controller, SignupViewModel signupViewModel) {
 
-        this.signupController = controller;
-        this.signupViewModel = signupViewModel;
+        this.loginController = controller;
+        this.loginViewModel = signupViewModel;
         signupViewModel.addPropertyChangedListener(this);
 
         JLabel title = new JLabel(signupViewModel.TITLE_BOX);
@@ -89,20 +87,5 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
         this.add(buttons);
-    }
-
-    /**
-     * React to a button click that results in evt.
-     */
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Cancel not implemented yet.");
-    }
-
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        SignupState state = (SignupState) evt.getNewValue();
-        if (state.getUsernameError() != null) {
-            JOptionPane.showMessageDialog(this, state.getUsernameError());
-        }
     }
 }
