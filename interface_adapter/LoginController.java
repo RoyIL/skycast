@@ -1,7 +1,7 @@
 package interface_adapter;
 
-import use_case.LoginInputBoundary;
-import use_case.LoginInputData;
+import use_case.login.LoginInputBoundary;
+import use_case.login.LoginInputData;
 
 
 public class LoginController {
@@ -12,6 +12,6 @@ public class LoginController {
     }
 
     public void execute(String username, String password) {
-        LoginInputData loginInputData = new LoginInoutData(username, password);
+        LoginInputData loginInputData = new LoginInputData(username, password);
     }
 }
