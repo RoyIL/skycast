@@ -11,7 +11,7 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class LoginView  extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "login";
 
     private final LoginViewModel loginViewModel;
