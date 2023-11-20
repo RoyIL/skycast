@@ -1,4 +1,7 @@
-package interface_adapter;
+package interface_adapter.signup;
+
+import interface_adapter.ViewModel;
+import interface_adapter.signup.SignupState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

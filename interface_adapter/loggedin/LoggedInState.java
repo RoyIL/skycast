@@ -1,4 +1,4 @@
-package interface_adapter;
+package interface_adapter.loggedin;
 
 public class LoggedInState {
     private String username = "";

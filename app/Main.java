@@ -1,11 +1,13 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
-import interface_adapter.LoggedInViewModel;
-import interface_adapter.LoginViewModel;
-import interface_adapter.SignupViewModel;
+import interface_adapter.loggedin.LoggedInViewModel;
+import interface_adapter.login.LoginViewModel;
+import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import view.LoginView;
 import view.SignupView;
+import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,8 +53,8 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-        views.add(loggedInView, loggedInView.viewName);
+//        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+//        views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();

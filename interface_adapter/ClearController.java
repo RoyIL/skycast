@@ -1,3 +1,5 @@
 package interface_adapter;
 
-public class ClearController()
+public class ClearController {
+
+}

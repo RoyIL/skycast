@@ -1,6 +1,4 @@
-package interface_adapter;
-
-import view.SignupView;
+package interface_adapter.signup;
 
 public class SignupState {
     private String username = "";
