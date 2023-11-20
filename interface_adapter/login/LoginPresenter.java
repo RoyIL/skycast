@@ -1,10 +1,7 @@
-package interface_adapter;
-
-import use_case.LoginOutputBoundary;
-import use_case.LoginOutputData;
-import interface_adapter.LoggedInState;
-import interface_adapter.LoggedInViewModel;
+package interface_adapter.login;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.loggedin.LoggedInState;
+import interface_adapter.loggedin.LoggedInViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
 
