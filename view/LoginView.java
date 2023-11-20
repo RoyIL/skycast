@@ -1,8 +1,6 @@
 package view;
 
-import interface_adapter.SignupController;
-import interface_adapter.SignupState;
-import interface_adapter.SignupViewModel;
+import interface_adapter.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,48 +11,47 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class SignupView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "sign up";
+public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
+    public final String viewName = "login";
 
-    private final SignupViewModel signupViewModel;
+    private final LoginViewModel loginViewModel;
+
     private final JTextField usernameInputField = new JTextField(15);
+
     private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
-    private final SignupController signupController;
 
-    private final JButton signUp;
+    private final LoginController loginController;
+
+    private final JButton login;
+
     private final JButton cancel;
+    public LoginView(LoginController controller, LoginViewModel loginViewModel) {
 
-    public SignupView(SignupController controller, SignupViewModel signupViewModel) {
+        this.loginController = controller;
+        this.loginViewModel = loginViewModel;
+        loginViewModel.addPropertyChangedListener(this);
 
-        this.signupController = controller;
-        this.signupViewModel = signupViewModel;
-        signupViewModel.addPropertyChangedListener(this);
-
-        JLabel title = new JLabel(signupViewModel.TITLE_BOX);
+        JLabel title = new JLabel(loginViewModel.TITLE_BOX);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPannel usernameInfo = new LabelTextPannel(
-                new JLabel(signupViewModel.SIGNUP_USERNAME_LABEL), usernameInputField);
+                new JLabel(loginViewModel.LOGIN_USERNAME_LABEL), usernameInputField);
         LabelTextPannel passwordInfo = new LabelTextPannel(
-                new JLabel(signupViewModel.SIGNUP_PASSWORD_LABEL), passwordInputField);
-        LabelTextPannel repeatPasswordInfo = new LabelTextPannel(
-                new JLabel(signupViewModel.SIGNUP_REP_PASSWORD_LABEL), repeatPasswordInputField);
+                new JLabel(loginViewModel.LOGIN_PASSWORD_LABEL), passwordInputField);
 
         JPanel buttons = new JPanel();
-        signUp = new JButton(signupViewModel.SIGNUP_BUTTON_LABEL);
-        buttons.add(signUp);
-        cancel = new JButton(signupViewModel.CANCEL_SIGNUP_BUTTON_LABEL);
+        login = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
+        buttons.add(login);
+        cancel = new JButton(loginViewModel.CANCEL_LOGIN_BUTTON_LABEL);
         buttons.add(cancel);
 
-        signUp.addActionListener(
+        login.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(signUp)) {
-                            signupController.execute(usernameInputField.getText(),
-                                    String.valueOf(passwordInputField.getPassword()),
-                                    String.valueOf(repeatPasswordInputField.getPassword()));
+                        if (evt.getSource().equals(login)) {
+                            loginController.execute(usernameInputField.getText(),
+                                    String.valueOf(passwordInputField.getPassword()));
                         }
                     }
                 }
@@ -69,9 +66,9 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        SignupState currentState = signupViewModel.getWindowState();
+                        LoginState currentState = loginViewModel.getWindowState();
                         currentState.setUsername(usernameInputField.getText() + e.getKeyChar());
-                        signupViewModel.setWindowState(currentState);
+                        loginViewModel.setWindowState(currentState);
                     }
 
                     @Override
@@ -87,7 +84,6 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
         this.add(title);
         this.add(usernameInfo);
         this.add(passwordInfo);
-        this.add(repeatPasswordInfo);
         this.add(buttons);
     }
 
