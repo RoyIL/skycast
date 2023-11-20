@@ -9,12 +9,12 @@ public class SignupViewModel extends ViewModel {
      * OUR FIRST USE CASE. THESE WILL BE UPDATED AS THE PROJECT PROGRESSES
      */
     public final String TITLE_BOX = "Signup View";
-    public final String LOGIN_USERNAME_LABEL = "Enter username here...";
-    public final String LOGIN_PASSWORD_LABEL = "Enter password here...";
-    public final String LOGIN_REP_PASSWORD_LABEL = "Repeat password here...";
+    public final String SIGNUP_USERNAME_LABEL = "Enter username here...";
+    public final String SIGNUP_PASSWORD_LABEL = "Enter password here...";
+    public final String SIGNUP_REP_PASSWORD_LABEL = "Repeat password here...";
 
-    public final String LOGIN_BUTTON_LABEL = "Signup";
-    public final String CANCEL_LOGIN_BUTTON_LABEL = "Cancel Signup";
+    public final String SIGNUP_BUTTON_LABEL = "Signup";
+    public final String CANCEL_SIGNUP_BUTTON_LABEL = "Cancel Signup";
 
     private SignupState windowState = new SignupState();
 
