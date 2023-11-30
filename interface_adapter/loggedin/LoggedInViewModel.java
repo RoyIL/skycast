@@ -2,6 +2,7 @@ package interface_adapter.loggedin;
 
 import interface_adapter.ViewModel;
 
+import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -25,6 +26,10 @@ public class LoggedInViewModel extends ViewModel {
     public final String FUTURE_DATA_DEFAULT_TEXT = "(0: 00:00, 00%)";
     // TODO: CREATE PROPER LABEL FOR FUTURE_DATA_LABEL
     public final String FUTURE_DATA_LABEL = "TEMPTITLE (Days Out: MAX:MIN, % Rain)";
+
+    // TODO: Add valid File path for image icons
+    public final ImageIcon SETTING_BUTTON_IMG = new ImageIcon("");
+    public final ImageIcon DEFAULT_DISPLAY_IMG = new ImageIcon("");
 
     private LoggedInState windowState = new LoggedInState();
 
