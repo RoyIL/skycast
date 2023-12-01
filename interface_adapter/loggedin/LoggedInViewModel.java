@@ -3,6 +3,7 @@ package interface_adapter.loggedin;
 import interface_adapter.ViewModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
@@ -27,9 +28,10 @@ public class LoggedInViewModel extends ViewModel {
     // TODO: CREATE PROPER LABEL FOR FUTURE_DATA_LABEL
     public final String FUTURE_DATA_LABEL = "TEMPTITLE (Days Out: MAX:MIN, % Rain)";
     public final String LOGOUT_BUTTON_TEXT = "Logout";
+    public final String BUFFER_EMPTY_TEXT = "";
 
     // TODO: Add valid File path for image icons
-    public final ImageIcon SETTING_BUTTON_IMG = new ImageIcon("");
+    public final ImageIcon SETTING_BUTTON_IMG = scaleImageTo50("images/setting_icon.png");
     public final ImageIcon DEFAULT_DISPLAY_IMG = new ImageIcon("");
 
     private LoggedInState windowState = new LoggedInState();
@@ -54,5 +56,16 @@ public class LoggedInViewModel extends ViewModel {
 
     public LoggedInState getWindowState() {
         return windowState;
+    }
+
+    private ImageIcon scaleImageTo50(String filePath) {
+        /*
+          This is a helper function to scale images to fit the view.
+          This function takes a file path and returns an ImageIcon of 50*50 size
+         */
+        ImageIcon tempImg = new ImageIcon(filePath);
+        Image convertImg = tempImg.getImage();
+        Image newConvertImage = convertImg.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        return new ImageIcon(newConvertImage);
     }
 }

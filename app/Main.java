@@ -7,6 +7,7 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import view.LoginView;
 import view.SignupView;
+import view.LoggedInView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -47,19 +48,26 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loggedInViewModel);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-//        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-//        views.add(loggedInView, loggedInView.viewName);
+        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+        views.add(loggedInView, loggedInView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
         application.setVisible(true);
+
+        while (1 > 0) {
+            viewManagerModel.firePropertyChanged();
+
+            application.pack();
+            application.setVisible(true);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package app;
 
 import interface_adapter.*;
+import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -14,13 +15,13 @@ import view.SignupView;
 public class SignupUseCaseFactory {
     private SignupUseCaseFactory() {}
 
-    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface accessObject) {
-        SignupController signupController = createSignupUseCase(viewManagerModel, loginViewModel, signupViewModel, accessObject);
+    public static SignupView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface accessObject, LoggedInViewModel loggedInViewModel) {
+        SignupController signupController = createSignupUseCase(viewManagerModel, loginViewModel, signupViewModel, accessObject, loggedInViewModel);
         return new SignupView(signupController, signupViewModel);
     }
 
-    private static SignupController createSignupUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface accessObject) {
-        SignupOutputBoundary outputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
+    private static SignupController createSignupUseCase(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, SignupUserDataAccessInterface accessObject, LoggedInViewModel loggedInViewModel) {
+        SignupOutputBoundary outputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel, loggedInViewModel);
         SignupInputBoundary inputBoundary = new SignupInteractor(accessObject, outputBoundary);
 
         return new SignupController(inputBoundary);
