@@ -26,6 +26,7 @@ public class LoggedInViewModel extends ViewModel {
     public final String FUTURE_DATA_DEFAULT_TEXT = "(0: 00:00, 00%)";
     // TODO: CREATE PROPER LABEL FOR FUTURE_DATA_LABEL
     public final String FUTURE_DATA_LABEL = "TEMPTITLE (Days Out: MAX:MIN, % Rain)";
+    public final String LOGOUT_BUTTON_TEXT = "Logout";
 
     // TODO: Add valid File path for image icons
     public final ImageIcon SETTING_BUTTON_IMG = new ImageIcon("");
