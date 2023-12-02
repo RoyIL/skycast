@@ -34,6 +34,8 @@ public class LoggedInViewModel extends ViewModel {
     public final ImageIcon SETTING_BUTTON_IMG = scaleImageTo50("images/setting_icon.png");
     public final ImageIcon DEFAULT_DISPLAY_IMG = new ImageIcon("");
 
+    public final Font TITLE_FONT = new Font("TITLE_FONT", Font.PLAIN,30);
+
     private LoggedInState windowState = new LoggedInState();
 
     private final PropertyChangeSupport checkerHelp = new PropertyChangeSupport(this);
