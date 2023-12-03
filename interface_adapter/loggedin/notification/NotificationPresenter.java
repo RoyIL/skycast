@@ -7,21 +7,21 @@ import use_case.notifacation.NotificationOutputData;
 
 public class NotificationPresenter implements NotificationOutputBoundary {
 
+    // Variable declaration for storage of ViewManagerModel or and NotificationViewModel
     private final ViewManagerModel viewManagerModel;
     private final NotificationViewModel notificationViewModel;
 
+    // Initializer
     public NotificationPresenter(ViewManagerModel viewManagerModel, NotificationViewModel notificationViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.notificationViewModel = notificationViewModel;
     }
 
+    // Method for how to update the view after the use case runs successfuly
     public void prepareSuccessView(NotificationOutputData notification) {
-        NotificationState newWindowState = notificationViewModel.getWindowState();
-        notificationViewModel.setWindowState(newWindowState);
-
-        // FROM TESTING System.out.println(notificationViewModel.getWindowState().getCityName());
-
+        // Sets the active view name to the view name of NotificationView
         viewManagerModel.setActiveView(notificationViewModel.getViewName());
+        // Creates a property changed event to update the view
         viewManagerModel.firePropertyChanged();
     }
 }
