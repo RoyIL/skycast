@@ -3,8 +3,10 @@ package interface_adapter.signup;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.loggedin.*;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
+import view.LoggedInView;
 
 import java.time.LocalDateTime;
 
@@ -12,14 +14,17 @@ public class SignupPresenter implements SignupOutputBoundary {
 
     private final SignupViewModel signupViewModel;
     private final LoginViewModel loginViewModel;
+    private final LoggedInViewModel loggedInViewModel;
     private ViewManagerModel viewManagerModel;
 
     public SignupPresenter(ViewManagerModel viewManagerModel,
                            SignupViewModel signupViewModel,
-                           LoginViewModel loginViewModel) {
+                           LoginViewModel loginViewModel,
+                           LoggedInViewModel loggedInViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
         this.loginViewModel = loginViewModel;
+        this.loggedInViewModel = loggedInViewModel;
     }
 
     @Override
@@ -33,8 +38,9 @@ public class SignupPresenter implements SignupOutputBoundary {
         this.loginViewModel.setWindowState(loginState);
         loginViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(loginViewModel.getViewName());
+        viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
+
     }
 
     @Override
