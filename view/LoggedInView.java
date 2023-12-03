@@ -3,6 +3,7 @@ package view;
 import interface_adapter.loggedin.*;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
+import interface_adapter.loggedin.notification.NotificationController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,16 +40,17 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     private final LoggedInViewModel loggedInViewModel;
 
+    private final NotificationController notificationController;
     // End of variable declaration
 
     // TODO: ADD ALL USE CASE CONTROLLERS TO INITIALIZER "LoginController controller, "
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, NotificationController notificationController) {
         /**
          * TODO: Impliment basic controler classes for the view functionality
          */
 
-        // this.logiController = controller;
+        this.notificationController = notificationController;
         this.loggedInViewModel = loggedInViewModel;
         loggedInViewModel.addPropertyChangedListener(this);
 
@@ -93,8 +95,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
             new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
                     if (evt.getSource().equals(createNotificationButton)) {
-                        // TODO: ADD CONTROLLER EXECUTE LINE HERE
-                        int i = 0;
+                        notificationController.execute();
                     }
                 }
             }
