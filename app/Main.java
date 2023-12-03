@@ -2,13 +2,12 @@ package app;
 
 import data_access.FileUserDataAccessObject;
 import interface_adapter.loggedin.LoggedInViewModel;
+import interface_adapter.loggedin.notification.NotificationController;
+import interface_adapter.loggedin.notification.NotificationViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
-import view.LoginView;
-import view.SignupView;
-import view.LoggedInView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -40,6 +39,7 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        NotificationViewModel notificationViewModel = new NotificationViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -54,8 +54,11 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel);
         views.add(loggedInView, loggedInView.viewName);
+
+        NotificationView notificationView = new NotificationView(notificationViewModel);
+        views.add(notificationView, notificationView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
@@ -63,11 +66,5 @@ public class Main {
         application.pack();
         application.setVisible(true);
 
-        while (1 > 0) {
-            viewManagerModel.firePropertyChanged();
-
-            application.pack();
-            application.setVisible(true);
-        }
     }
 }
