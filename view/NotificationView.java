@@ -71,6 +71,7 @@ public class NotificationView extends JPanel implements ActionListener, Property
         togglePrecipitationChanceLabel = new JLabel(notificationViewModel.TOGGLE_PRECIPITATION_CHANCE_LABEL);
         toggleCurrentTemperatureLabel = new JLabel(notificationViewModel.TOGGLE_CURRENT_TEMPERATURE_LABEL);
         cityNameLabel = new JLabel(notificationViewModel.CITY_NAME_INPUT_LABEL);
+        phoneNumberLabel = new JLabel();
         bufferLabel = new JLabel();
 
         toggleDailyMaxMinButton = new JButton(toggleDailyMaxMinString);
