@@ -31,7 +31,7 @@ public class WeatherRepository implements LocationLookupDataAccessInterface, Wea
             RequestBody body = RequestBody.create(mediaType, "");
             Request request = new Request.Builder()
                     .url("http://api.weatherapi.com/v1/search.json?key=" + apiKey + "&q=" + locationInput)
-                    .method("GET", body)
+                    .method("POST", body)
                     .build();
             Response response = client.newCall(request).execute();
 
@@ -67,9 +67,9 @@ public class WeatherRepository implements LocationLookupDataAccessInterface, Wea
             MediaType mediaType = MediaType.parse("text/plain");
             RequestBody body = RequestBody.create(mediaType, "");
             Request request = new Request.Builder()
-                    .url("http://api.weatherapi.com/v1/forecast.json?key=" + apiKey + "&q=" + location.getLat() + ","
-                            + location.getLon() + "&days=" + Math.max(14, FORECAST_DAYS))
-                    .method("GET", body)
+                    .url("http://api.weatherapi.com/v1/forecast.json?key=" + apiKey + "&q=" + Float.toString(location.getLat()) + ","
+                            + Float.toString(location.getLon()) + "&days=" + Math.max(14, FORECAST_DAYS))
+                    .method("POST", body)
                     .build();
             Response response = client.newCall(request).execute();
 
@@ -80,7 +80,7 @@ public class WeatherRepository implements LocationLookupDataAccessInterface, Wea
             JSONObject jsonObject = new JSONObject(response.body().string());
             JSONObject currentData = jsonObject.getJSONObject("current");
             JSONArray forecastDataArray = jsonObject.getJSONObject("forecast").getJSONArray("forecastday");
-            JSONObject todayForecastData = forecastDataArray.getJSONObject(0);
+            JSONObject todayForecastData = forecastDataArray.getJSONObject(0).getJSONObject("day");
 
             float currTempC = currentData.getFloat("temp_c");
             String currentCondition = currentData.getJSONObject("condition").getString("text");
@@ -93,12 +93,13 @@ public class WeatherRepository implements LocationLookupDataAccessInterface, Wea
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             for(int i = 1; i < forecastDataArray.length(); i++) {
                 JSONObject rawForecastData = forecastDataArray.getJSONObject(i);
+                JSONObject dailyForecastData = rawForecastData.getJSONObject("day");
 
                 LocalDate forecastDate = LocalDate.parse(rawForecastData.getString("date"), formatter);
-                int chanceOfPrecipitation = Math.max(rawForecastData.getInt("daily_chance_of_rain"),
-                        rawForecastData.getInt("daily_chance_of_snow"));
-                float maxTemp = rawForecastData.getFloat("maxtemp_c");
-                float minTemp = rawForecastData.getFloat("mintemp_c");
+                int chanceOfPrecipitation = Math.max(dailyForecastData.getInt("daily_chance_of_rain"),
+                        dailyForecastData.getInt("daily_chance_of_snow"));
+                float maxTemp = dailyForecastData.getFloat("maxtemp_c");
+                float minTemp = dailyForecastData.getFloat("mintemp_c");
 
                 weatherForecast[i - 1] = new LocationWeatherForecastData(forecastDate, maxTemp, minTemp, chanceOfPrecipitation);
             }
