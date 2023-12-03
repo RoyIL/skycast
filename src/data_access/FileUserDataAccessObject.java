@@ -92,4 +92,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         return accounts.containsKey(identifier);
     }
 
+    public String getCsvFilePath() {
+        return csvFile.getPath();
+    }
+
 }
