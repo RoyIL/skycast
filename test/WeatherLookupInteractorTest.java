@@ -53,7 +53,8 @@ public class WeatherLookupInteractorTest {
 
                 assertFalse(data.getCurrentCondition().isEmpty());
                 assertTrue(data.getDailyChanceOfPrecipitation() >= 0 && data.getDailyChanceOfPrecipitation() <= 100);
-                //assertTrue(data.getMinDailyTemp() <= data.getCurrentTempC() && data.getCurrentTempC() <= data.getMaxDailyTemp());
+                assertTrue(data.getMinDailyTemp() >= -100 && data.getMaxDailyTemp() <= 100);
+                assertTrue(data.getCurrentTempC() >= -100 && data.getCurrentTempC() <= 100);
 
                 for(LocationWeatherForecastData forecast : data.getWeatherForecast()) {
                     if(forecast != null) {

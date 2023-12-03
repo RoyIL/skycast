@@ -49,6 +49,8 @@ public class LocationLookupInteractorTest {
                 assertEquals(data.getName(), "Toronto");
                 assertEquals(data.getRegion(), "Ontario");
                 assertEquals(data.getCountry(), "Canada");
+                assertTrue(data.getLat() >= -90 && data.getLat() <= 90);
+                assertTrue(data.getLon() >= -180 && data.getLon() <= 180);
             }
 
             @Override
