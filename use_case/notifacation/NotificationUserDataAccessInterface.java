@@ -1,2 +1,5 @@
-package use_case.notifacation;public interface NotificationUserDataAccessInterface {
+package use_case.notifacation;
+
+public interface NotificationUserDataAccessInterface {
+
 }
