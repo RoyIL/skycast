@@ -25,6 +25,6 @@ public class LocationLookupInteractor implements LocationLookupInputBoundary {
             return;
         }
 
-        presenter.prepareSuccessView(new LocationLookupOutputData(location.getName(), location.getRegion(), location.getCountry()));
+        presenter.prepareSuccessView(new LocationLookupOutputData(location.getName(), location.getRegion(), location.getCountry(), location.getLon(), location.getLat()));
     }
 }
