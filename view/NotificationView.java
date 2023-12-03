@@ -24,6 +24,7 @@ public class NotificationView extends JPanel implements ActionListener, Property
     private final JLabel togglePrecipitationChanceLabel;
     private final JLabel toggleCurrentTemperatureLabel;
     private final JLabel cityNameLabel;
+    private final JLabel phoneNumberLabel;
     private final JLabel bufferLabel;
 
     private final JButton toggleDailyMaxMinButton;
@@ -70,6 +71,7 @@ public class NotificationView extends JPanel implements ActionListener, Property
         togglePrecipitationChanceLabel = new JLabel(notificationViewModel.TOGGLE_PRECIPITATION_CHANCE_LABEL);
         toggleCurrentTemperatureLabel = new JLabel(notificationViewModel.TOGGLE_CURRENT_TEMPERATURE_LABEL);
         cityNameLabel = new JLabel(notificationViewModel.CITY_NAME_INPUT_LABEL);
+        phoneNumberLabel = new JLabel();
         bufferLabel = new JLabel();
 
         toggleDailyMaxMinButton = new JButton(toggleDailyMaxMinString);
@@ -81,6 +83,38 @@ public class NotificationView extends JPanel implements ActionListener, Property
         cityNameInputField = new JTextField(cityForNotificationString);
 
         cityNameInputField.setText(notificationViewModel.getWindowState().getCityName());
+
+        toggleDailyMaxMinButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(toggleDailyMaxMinButton)) {
+                            NotificationState newState = notificationViewModel.getWindowState();
+                            if (!newState.getWantDailyMaxMin()) {
+                                toggleDailyMaxMinButton.setText(notificationViewModel.TOGGLE_BUTTON_TRUE_STATE);
+                            } else {
+                                toggleDailyMaxMinButton.setText(notificationViewModel.TOGGLE_BUTTON_FALSE_STATE);
+                            }
+                            newState.setWantDailyMaxMin(!newState.getWantDailyMaxMin());
+                        }
+                    }
+                }
+        );
+
+        toggleCurrentTemperatureButton.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(toggleCurrentTemperatureButton)) {
+                            NotificationState newState = notificationViewModel.getWindowState();
+                            if (!newState.getWantCurrentTemperature()) {
+                                toggleCurrentTemperatureButton.setText(notificationViewModel.TOGGLE_BUTTON_TRUE_STATE);
+                            } else {
+                                toggleCurrentTemperatureButton.setText(notificationViewModel.TOGGLE_BUTTON_FALSE_STATE);
+                            }
+                            newState.setWantCurrentTemperature(!newState.getWantCurrentTemperature());
+                        }
+                    }
+                }
+        );
 
         togglePrecipitationChanceButton.addActionListener(
             new ActionListener() {
