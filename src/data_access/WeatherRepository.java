@@ -6,6 +6,7 @@ import entity.LocationWeatherForecastData;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import use_case.createNotification.CreateNotificationDataAccessInterface;
 import use_case.location_lookup.LocationLookupDataAccessInterface;
 import use_case.weather_lookup.WeatherLookupDataAccessInterface;
 

@@ -28,11 +28,11 @@ public class LoggedInViewModel extends ViewModel {
 
     // ImageIcon declaration
     public final ImageIcon SETTING_BUTTON_IMG = scaleImageTo50("images/setting_icon.png");
-    public final ImageIcon DEFAULT_DISPLAY_IMG = scaleImageTo50("images/sunny_icon.png");
-    public final ImageIcon SUNNY_IMG = scaleImageTo50("images/sunny_icon.png");
-    public final ImageIcon RAINY_IMG = scaleImageTo50("images/rainy_icon.png");
-    public final ImageIcon SNOWY_IMG = scaleImageTo50("images/snowy_icon.png");
-    public final ImageIcon CLOUDY_IMG = scaleImageTo50("images/cloudy_icon.png");
+    public final ImageIcon DEFAULT_DISPLAY_IMG = scaleImageTo50("src/images/sunny_icon.png");
+    public final ImageIcon SUNNY_IMG = scaleImageTo50("src/images/sunny_icon.png");
+    public final ImageIcon RAINY_IMG = scaleImageTo50("src/images/rainy_icon.png");
+    public final ImageIcon SNOWY_IMG = scaleImageTo50("src/images/snowy_icon.png");
+    public final ImageIcon CLOUDY_IMG = scaleImageTo50("src/images/cloudy_icon.png");
 
     // Font declaration
     public final Font TITLE_FONT = new Font("TITLE_FONT", Font.PLAIN,30);

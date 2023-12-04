@@ -18,6 +18,7 @@ public class NotificationPresenter implements NotificationOutputBoundary {
     }
 
     // Method for how to update the view after the use case runs successfuly
+    @Override
     public void prepareSuccessView(NotificationOutputData notification) {
         // Sets the active view name to the view name of NotificationView
         viewManagerModel.setActiveView(notificationViewModel.getViewName());

@@ -5,6 +5,7 @@ public class NotificationState {
 
     // String type declarations
     private String cityName = "";
+    private String errorMessage = null;
 
     // Boolean Object declaration
     private Boolean wantPrecipitationChance = Boolean.FALSE;
@@ -20,6 +21,7 @@ public class NotificationState {
         wantPrecipitationChance = duplicate.wantPrecipitationChance;
         wantDailyMaxMin = duplicate.wantDailyMaxMin;
         wantCurrentTemperature = duplicate.wantCurrentTemperature;
+        errorMessage = duplicate.errorMessage;
     }
 
     // Void initializer
@@ -30,6 +32,7 @@ public class NotificationState {
 
     // Getter string functions
     public String getCityName() {return cityName;}
+    public String getErrorMessage() {return errorMessage;}
     // Getter boolean functions
     public Boolean getWantPrecipitationChance() {return wantPrecipitationChance;};
     public Boolean getWantDailyMaxMin() {return wantDailyMaxMin;}
@@ -39,6 +42,7 @@ public class NotificationState {
 
     // Setter string functions
     public void setCityName(String newCityName) {cityName = newCityName;}
+    public void setErrorMessage(String errorMessage) {this.errorMessage = errorMessage;}
 
     // Setter boolean Functions
     public void setWantPrecipitationChance(Boolean newBoolValue) {wantPrecipitationChance = newBoolValue;}
