@@ -33,10 +33,12 @@ public class SignupPresenter implements SignupOutputBoundary {
         LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
         // response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss"))); #is this needed?
 
-        LoginState loginState = loginViewModel.getWindowState();
-        loginState.setUsername(response.getUsername());
-        this.loginViewModel.setWindowState(loginState);
-        loginViewModel.firePropertyChanged();
+        SignupState signupState = signupViewModel.getWindowState();
+        signupState.setUsername(response.getUsername());
+
+        LoggedInState updaterState = loggedInViewModel.getWindowState();
+        updaterState.setUsername(signupState.getUsername());
+        loggedInViewModel.setWindowState(updaterState);
 
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();

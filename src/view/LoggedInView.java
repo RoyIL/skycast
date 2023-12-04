@@ -116,7 +116,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(createNotificationButton)) {
-                            notificationController.execute();
+                            notificationController.execute(loggedInViewModel.getWindowState().getUsername());
                         }
                     }
                 }

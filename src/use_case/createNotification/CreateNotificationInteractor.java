@@ -37,7 +37,12 @@ public class CreateNotificationInteractor implements  CreateNotificationInputBou
         long minutesOut = 0;
 
         Location cityNameHolder = locationLookupDataAccessObject.getLocation(notificationInputData.getCityName());
-        String phoneNumber = dataAccessObject.getPhoneNumber();
+        String phoneNumber = dataAccessObject.getPhoneNumber(notificationInputData.getUsername());
+
+        if (phoneNumber.equals("NONE")) {
+            presenter.prepareFailView("No phone number saved to account!");
+            return;
+        }
 
         if (cityNameHolder.getName().isEmpty()) {
             presenter.prepareFailView("This location could not be found!");

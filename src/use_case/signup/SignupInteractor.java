@@ -26,7 +26,7 @@ public class SignupInteractor implements SignupInputBoundary {
         }
 
         CommonUser user = new CommonUser(signupInputData.getUsername(), signupInputData.getPassword(),
-                LocalDateTime.now(), "");
+                LocalDateTime.now(), "NONE");
         accessObject.save(user);
 
         presenter.prepareSuccessView(new SignupOutputData(user.getUsername(), user.getCreationTime().toString()));

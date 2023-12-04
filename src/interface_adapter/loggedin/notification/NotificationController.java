@@ -13,9 +13,9 @@ public class NotificationController {
     }
 
     // Execute call through the input boundary interface
-    public void execute() {
+    public void execute(String username) {
         // Create an instance of NotificationInputData
-        NotificationInputData notificationInputData = new NotificationInputData();
+        NotificationInputData notificationInputData = new NotificationInputData(username);
 
         // Use input boundary instance to call execute function
         createNotificationInteractor.execute(notificationInputData);
