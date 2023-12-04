@@ -136,8 +136,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(settingsButton)) {
-                            // TODO: ADD CONTROLLER EXECUTE LINE HERE
-                           settingsButtonController.execute();
+                           settingsButtonController.execute(loggedInViewModel.getWindowState().getUsername());
                         }
                     }
                 }
