@@ -11,14 +11,16 @@ public class CreateNotificationInputData {
     private Boolean wantPrecipitationChance;
     private Boolean wantCurrentTemperature;
     private String notificationTime;
+    private String username;
 
     public CreateNotificationInputData(String cityName, Boolean wantCurrentTemperature, Boolean wantDailyMaxMin,
-                                       Boolean wantPrecipitationChance, String notificationTime) {
+                                       Boolean wantPrecipitationChance, String notificationTime, String username) {
         this.cityName = cityName;
         this.wantCurrentTemperature = wantCurrentTemperature;
         this.wantDailyMaxMin = wantDailyMaxMin;
         this.wantPrecipitationChance = wantPrecipitationChance;
         this.notificationTime = notificationTime;
+        this.username = username;
     }
 
     public String getCityName() {return cityName;}
@@ -26,4 +28,5 @@ public class CreateNotificationInputData {
     public Boolean getWantDailyMaxMin() {return wantDailyMaxMin;}
     public Boolean getWantPrecipitationChance() {return wantPrecipitationChance;}
     public String getNotificationTime() {return notificationTime;}
+    public String getUsername() {return username;}
 }

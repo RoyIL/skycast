@@ -89,6 +89,16 @@ public class NotificationView extends JPanel implements ActionListener, Property
 
         cityNameInputField.setText(notificationViewModel.getWindowState().getCityName());
 
+        cancelNotification.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(cancelNotification)) {
+                            int a = 0;
+                        }
+                    }
+                }
+        );
+
         toggleDailyMaxMinButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -144,7 +154,8 @@ public class NotificationView extends JPanel implements ActionListener, Property
                             NotificationState windowState = notificationViewModel.getWindowState();
                             createNotificationController.execute(windowState.getCityName(),
                                     windowState.getWantCurrentTemperature(), windowState.getWantDailyMaxMin(),
-                                    windowState.getWantPrecipitationChance(), windowState.getNotificationTime());
+                                    windowState.getWantPrecipitationChance(), windowState.getNotificationTime(),
+                                    windowState.getUsername());
                         }
                     }
                 }
