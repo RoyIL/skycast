@@ -5,6 +5,7 @@ import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.loggedin.notification.NotificationController;
 import interface_adapter.loggedin.notification.NotificationPresenter;
 import interface_adapter.loggedin.notification.NotificationViewModel;
+import interface_adapter.loggedin.settings.SettingsButtonController;
 import use_case.notifacation.NotificationInputBoundary;
 import use_case.notifacation.NotificationInteractor;
 import use_case.notifacation.NotificationOutputBoundary;
@@ -14,10 +15,11 @@ import view.NotificationView;
 public class LoggedInUseCaseFactory {
     private LoggedInUseCaseFactory() {}
 
-    public static LoggedInView create(ViewManagerModel viewManager, LoggedInViewModel loggedInViewModel, NotificationViewModel notificationViewModel) {
+    public static LoggedInView create(ViewManagerModel viewManager, LoggedInViewModel loggedInViewModel,
+                                      NotificationViewModel notificationViewModel, SettingsButtonController settingsButtonController) {
         NotificationController notificationController = createNotificationUseCase(viewManager, notificationViewModel);
 
-        return new LoggedInView(loggedInViewModel, notificationController);
+        return new LoggedInView(loggedInViewModel, notificationController, settingsButtonController);
     }
 
     private static NotificationController createNotificationUseCase(ViewManagerModel viewManager, NotificationViewModel notificationViewModel) {
