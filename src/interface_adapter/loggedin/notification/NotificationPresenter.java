@@ -1,9 +1,8 @@
 package interface_adapter.loggedin.notification;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.loggedin.notification.NotificationViewModel;
-import use_case.notifacation.NotificationOutputBoundary;
-import use_case.notifacation.NotificationOutputData;
+import use_case.notification.NotificationOutputBoundary;
+import use_case.notification.NotificationOutputData;
 
 public class NotificationPresenter implements NotificationOutputBoundary {
 
