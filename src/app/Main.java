@@ -61,8 +61,6 @@ public class Main {
         }
 
         SettingsButtonController settingsButtonController = SettingsPressedUseCaseFactory.createSettingsButtonController(viewManagerModel, settingsViewModel);
-      
-        WeatherRepository weatherRepository = new WeatherRepository(System.getenv("apiKey"));
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loggedInViewModel);
         views.add(signupView, signupView.viewName);
