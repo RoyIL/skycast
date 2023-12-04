@@ -17,7 +17,7 @@ public class LoggedInViewModel extends ViewModel {
     public final String CREATE_NOTIFICATION_BUTTON_LABEL = "Create Notification";
     public final String CURRENT_TEMPERATURE_DEFAULT_TEXT = "00";
     public final String DAILY_MAX_MIN_DEFAULT_TEXT = "(00:00)";
-    public final String DAILY_MAX_MIN_LABEL = "(MAX:MIN) Degrees Celsius";
+    public final String DAILY_MAX_MIN_LABEL = "(MIN:MAX) Degrees Celsius";
     public final String PRECIPITATION_CHANCE_LABEL = "Chance of Precipitation";
     public final String PRECIPITATION_CHANCE_DEFAULT_TEXT= "00%";
     public final String CURRENT_TEMPERATURE_LABEL = "Current Temperature (Degrees Celsius)";
