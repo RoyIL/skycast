@@ -98,7 +98,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         // Input button - requires listeners
         createNotificationButton = new JButton(loggedInViewModel.CREATE_NOTIFICATION_BUTTON_LABEL);
         searchButton = new JButton(loggedInViewModel.CITY_SEARCH_BUTTON_LABEL);
-        settingsButton = new JButton(loggedInViewModel.SETTING_BUTTON_IMG);
+        settingsButton = new JButton("Settings");
+                // SETTING_BUTTON_IMG);
         logoutButton = new JButton(loggedInViewModel.LOGOUT_BUTTON_TEXT);
         // Output button - no functionality on click
         weatherIconDisplay = new JButton(loggedInViewModel.DEFAULT_DISPLAY_IMG);
@@ -136,7 +137,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(settingsButton)) {
-                           settingsButtonController.execute(loggedInViewModel.getWindowState().getUsername());
+                            settingsButtonController.execute(loggedInViewModel.getWindowState().getUsername());
                         }
                     }
                 }

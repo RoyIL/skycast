@@ -22,15 +22,13 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
     private final JButton enter;
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JTextField phoneNumberInputField = new JTextField(10);
-    private final JTextField regionInputField = new JTextField();
-    //private final HashMap<String,String> settingsMap;
     private final SettingsViewModel settingsViewModel;
     private final SettingsController settingsController;
-    private final ViewManagerModel viewManagerModel;
-    private final LoggedInViewModel loggedInViewModel;
+    private ViewManagerModel viewManagerModel;
+    private LoggedInViewModel loggedInViewModel;
     private String newPassword;
     private String newPhoneNumber;
-    private String newRegion;
+    //private final String username;
 
     public SettingsView(SettingsViewModel viewModel, SettingsController controller,
                         ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel) {
@@ -39,10 +37,8 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
         this.settingsController = controller;
         this.viewManagerModel = viewManagerModel;
         this.loggedInViewModel = loggedInViewModel;
-
         newPassword = "";
         newPhoneNumber = "";
-        newRegion = "";
 
         settingsViewModel.addPropertyChangedListener(this);
 
@@ -61,6 +57,7 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(back)) {
+
                             viewManagerModel.setActiveView(loggedInViewModel.getViewName());
                             viewManagerModel.firePropertyChanged();
                         }
@@ -71,7 +68,8 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(enter)) {
-                            settingsController.execute(newPassword, newPhoneNumber);
+                            settingsController.execute(settingsViewModel.getWindowState().getUsername(),
+                                    newPassword, newPhoneNumber);
                         }
                     }
                 }

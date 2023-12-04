@@ -11,9 +11,8 @@ public class SettingsController {
         this.setSettingsInteractor = setSettingsInteractor;
     }
 
-    public void execute(String newPassword, String newPhoneNumber) {
-        SetSettingsInputData setSettingsInputData = new SetSettingsInputData(newPassword, newPhoneNumber);
-
+    public void execute(String username, String newPassword, String newPhoneNumber) {
+        SetSettingsInputData setSettingsInputData = new SetSettingsInputData(username, newPassword, newPhoneNumber);
         setSettingsInteractor.execute(setSettingsInputData);
     }
 }
