@@ -2,6 +2,7 @@ package data_access;
 
 import entity.CommonUser;
 import entity.User;
+import use_case.createNotification.CreateNotificationDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.setsettings.SetSettingsDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -14,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface,
-        SetSettingsDataAccessInterface {
+        SetSettingsDataAccessInterface, CreateNotificationDataAccessInterface {
         //,CreateNotificationDataAccessInterface
 
     private final File csvFile;
@@ -65,6 +66,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
     public User get(String username) {
         return accounts.get(username);
     }
+
+    @Override
+    public String getPhoneNumber(String username) { return accounts.get(username).getPhoneNumber();}
 
     private void save() {
         BufferedWriter writer;
