@@ -8,6 +8,6 @@ public class NotificationInteractor implements NotificationInputBoundary {
     }
 
     public void execute(NotificationInputData notificationInputData) {
-        presenter.prepareSuccessView(new NotificationOutputData());
+        presenter.prepareSuccessView(new NotificationOutputData(notificationInputData.getUsername()));
     }
 }

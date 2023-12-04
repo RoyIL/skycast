@@ -6,6 +6,7 @@ public class NotificationState {
     // Variable declaration
 
     // String type declarations
+    private String username = "";
     private String cityName = "";
     private String notificationTime = "";
     private String errorMessage = null;
@@ -20,6 +21,7 @@ public class NotificationState {
 
     // Duplicate method for the view state
     public NotificationState(NotificationState duplicate) {
+        username = duplicate.username;
         cityName = duplicate.cityName;
         wantPrecipitationChance = duplicate.wantPrecipitationChance;
         wantDailyMaxMin = duplicate.wantDailyMaxMin;
@@ -38,6 +40,8 @@ public class NotificationState {
     public String getCityName() {return cityName;}
     public String getErrorMessage() {return errorMessage;}
     public String getNotificationTime() {return notificationTime;}
+
+    public String getUsername() {return username;}
     // Getter boolean functions
     public Boolean getWantPrecipitationChance() {return wantPrecipitationChance;};
     public Boolean getWantDailyMaxMin() {return wantDailyMaxMin;}
@@ -49,6 +53,7 @@ public class NotificationState {
     public void setCityName(String newCityName) {cityName = newCityName;}
     public void setErrorMessage(String errorMessage) {this.errorMessage = errorMessage;}
     public void setNotificationTime(String notificationTime) {this.notificationTime = notificationTime;}
+    public void setUsername(String username) {this.username = username;}
 
     // Setter boolean Functions
     public void setWantPrecipitationChance(Boolean newBoolValue) {wantPrecipitationChance = newBoolValue;}
