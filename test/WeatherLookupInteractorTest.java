@@ -1,5 +1,6 @@
 import data_access.WeatherRepository;
 import entity.Location;
+import entity.LocationWeatherData;
 import entity.LocationWeatherForecastData;
 import org.junit.Test;
 import use_case.weather_lookup.*;
@@ -46,11 +47,12 @@ public class WeatherLookupInteractorTest {
     private static WeatherLookupInputBoundary getWeatherInputBoundary(WeatherLookupDataAccessInterface repo, boolean isFailureExpected, boolean isLocationNull) {
         WeatherLookupOutputBoundary presenter = new WeatherLookupOutputBoundary() {
             @Override
-            public void prepareSuccessView(WeatherLookupOutputData data) {
+            public void prepareSuccessView(WeatherLookupOutputData rawData) {
                 if(isFailureExpected) {
                     fail("Failure was expected");
                 }
 
+                LocationWeatherData data = rawData.getLocationWeatherData();
                 assertFalse(data.getCurrentCondition().isEmpty());
                 assertTrue(data.getDailyChanceOfPrecipitation() >= 0 && data.getDailyChanceOfPrecipitation() <= 100);
                 //assertTrue(data.getMinDailyTemp() <= data.getCurrentTempC() && data.getCurrentTempC() <= data.getMaxDailyTemp());

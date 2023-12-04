@@ -5,11 +5,13 @@ import data_access.WeatherRepository;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.loggedin.notification.NotificationController;
 import interface_adapter.loggedin.notification.NotificationViewModel;
+import interface_adapter.loggedin.settings.SettingsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
 import services.TwilioService;
 import use_case.createNotification.CreateNotificationDataAccessInterface;
+import interface_adapter.loggedin.settings.SettingsButtonController;
 import view.*;
 
 import javax.swing.*;
@@ -24,6 +26,7 @@ public class Main {
 
         // The main application window.
         JFrame application = new JFrame("SkyCast");
+      
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -44,6 +47,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         NotificationViewModel notificationViewModel = new NotificationViewModel();
+        SettingsViewModel settingsViewModel = new SettingsViewModel();
 
         //
         TwilioService twilioService = new TwilioService();
@@ -56,18 +60,28 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        SettingsButtonController settingsButtonController = SettingsPressedUseCaseFactory.createSettingsButtonController(viewManagerModel, settingsViewModel);
+      
+        WeatherRepository weatherRepository = new WeatherRepository(System.getenv("apiKey"));
+
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loggedInViewModel);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel, weatherRepository, loginViewModel, signupViewModel, settingsButtonController);
+      
         views.add(loggedInView, loggedInView.viewName);
 
         NotificationView notificationView = CreateNotificationUseCaseFactory.create(userDataAccessObject,
                 weatherRepository, weatherRepository, twilioService,
                 viewManagerModel, loggedInViewModel, notificationViewModel);
+      
+        SettingsView settingsView = SettingsUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+               settingsViewModel, userDataAccessObject);
+        views.add(settingsView);
+
         views.add(notificationView, notificationView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

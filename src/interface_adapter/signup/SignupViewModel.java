@@ -17,7 +17,7 @@ public class SignupViewModel extends ViewModel {
     public final String SIGNUP_REP_PASSWORD_LABEL = "Repeat password here...";
 
     public final String SIGNUP_BUTTON_LABEL = "Signup";
-    public final String CANCEL_SIGNUP_BUTTON_LABEL = "Cancel Signup";
+    public final String LOGIN_FROM_SIGNUP_BUTTON_LABEL = "Login";
 
     private SignupState windowState = new SignupState();
 

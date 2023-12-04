@@ -3,7 +3,9 @@ package data_access;
 import entity.CommonUser;
 import entity.User;
 import use_case.login.LoginUserDataAccessInterface;
+import use_case.setsettings.SetSettingsDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
+//import use_case.createNotification.CreateNotificationDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -11,7 +13,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
+public class FileUserDataAccessObject implements SignupUserDataAccessInterface, LoginUserDataAccessInterface,
+        SetSettingsDataAccessInterface {
+        //,CreateNotificationDataAccessInterface
 
     private final File csvFile;
 
@@ -24,6 +28,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
         headers.put("username", 0);
         headers.put("password", 1);
         headers.put("creation_time", 2);
+        headers.put("phone_number", 3);
 
         if (csvFile.length() == 0) {
             save();
@@ -33,7 +38,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                 String header = reader.readLine();
 
                 // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,creation_time");
+                assert header.equals("username,password,creation_time,phone_number");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
@@ -41,8 +46,9 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
                     String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
+                    String phoneNumber = String.valueOf(col[headers.get("phone_number")]);
                     LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = new CommonUser(username, password, ldt);
+                    User user = new CommonUser(username, password, ldt, phoneNumber);
                     accounts.put(username, user);
                 }
             }
@@ -68,8 +74,8 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface, 
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s,%s",
-                        user.getUsername(), user.getPassword(), user.getCreationTime());
+                String line = String.format("%s,%s,%s,%s",
+                        user.getUsername(), user.getPassword(), user.getCreationTime(), user.getPhoneNumber());
                 writer.write(line);
                 writer.newLine();
             }

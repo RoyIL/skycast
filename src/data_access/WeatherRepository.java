@@ -85,6 +85,7 @@ public class WeatherRepository implements LocationLookupDataAccessInterface, Wea
 
             float currTempC = currentData.getFloat("temp_c");
             String currentCondition = currentData.getJSONObject("condition").getString("text");
+            String currentConditionIconURL = currentData.getJSONObject("condition").getString("icon");
             int dailyChanceOfPrecipitation = Math.max(todayForecastData.getInt("daily_chance_of_rain"),
                     todayForecastData.getInt("daily_chance_of_snow"));
             float maxDailyTemp = todayForecastData.getFloat("maxtemp_c");
@@ -105,7 +106,7 @@ public class WeatherRepository implements LocationLookupDataAccessInterface, Wea
                 weatherForecast[i - 1] = new LocationWeatherForecastData(forecastDate, maxTemp, minTemp, chanceOfPrecipitation);
             }
 
-            return new LocationWeatherData(currTempC, currentCondition, dailyChanceOfPrecipitation, maxDailyTemp, minDailyTemp, weatherForecast);
+            return new LocationWeatherData(currTempC, currentCondition, currentConditionIconURL, dailyChanceOfPrecipitation, maxDailyTemp, minDailyTemp, weatherForecast);
         } catch(IOException ex) {
             return null; //TODO: check/add error handling for API
         }
