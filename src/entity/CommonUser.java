@@ -6,10 +6,12 @@ public class CommonUser implements User {
     private final String username;
     private final String password;
     private final LocalDateTime creationTime;
-    public CommonUser(String inpUsername, String inpPassword, LocalDateTime inpCreationTime) {
+    private final String phoneNumber;
+    public CommonUser(String inpUsername, String inpPassword, LocalDateTime inpCreationTime, String inpPhoneNumber) {
         username = inpUsername;
         password = inpPassword;
         creationTime = inpCreationTime;
+        phoneNumber = "None";
     }
     @Override
     public String getUsername() {
@@ -25,4 +27,6 @@ public class CommonUser implements User {
     public LocalDateTime getCreationTime() {
         return this.creationTime;
     }
+    @Override
+    public String getPhoneNumber() {return this.phoneNumber;}
 }

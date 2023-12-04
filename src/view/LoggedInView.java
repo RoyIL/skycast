@@ -5,6 +5,9 @@ import entity.LocationWeatherData;
 import entity.LocationWeatherForecastData;
 import interface_adapter.location_lookup.LocationLookupController;
 import interface_adapter.loggedin.*;
+import interface_adapter.loggedin.settings.SettingsButtonController;
+import interface_adapter.login.LoginController;
+import interface_adapter.login.LoginState;
 import interface_adapter.loggedin.notification.NotificationController;
 import interface_adapter.login_signup_switch.LoginSignupSwitchController;
 import interface_adapter.weather_lookup.WeatherLookupController;
@@ -48,18 +51,22 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     private final LoggedInViewModel loggedInViewModel;
     private final NotificationController notificationController;
+    private final SettingsButtonController settingsButtonController;
     private final LocationLookupController locationLookupController;
     private final WeatherLookupController weatherLookupController;
     private final LoginSignupSwitchController loginSignupSwitchController;
+  
     // End of variable declaration
 
     // TODO: ADD ALL USE CASE CONTROLLERS TO INITIALIZER "LoginController controller, "
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel, NotificationController notificationController, LocationLookupController locationLookupController, WeatherLookupController weatherLookupController, LoginSignupSwitchController loginSignupSwitchController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, NotificationController notificationController, LocationLookupController locationLookupController, 
+                        WeatherLookupController weatherLookupController, LoginSignupSwitchController loginSignupSwitchController, SettingsButtonController settingsButtonController) {
         /**
          * TODO: Implement basic controler classes for the view functionality
          */
 
+        this.settingsButtonController = settingsButtonController;
         this.notificationController = notificationController;
         this.loggedInViewModel = loggedInViewModel;
         this.locationLookupController = locationLookupController;
@@ -130,7 +137,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(settingsButton)) {
                             // TODO: ADD CONTROLLER EXECUTE LINE HERE
-                            System.out.println("jaja binks says bonk");
+                           settingsButtonController.execute();
                         }
                     }
                 }

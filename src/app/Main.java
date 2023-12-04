@@ -5,9 +5,11 @@ import data_access.WeatherRepository;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.loggedin.notification.NotificationController;
 import interface_adapter.loggedin.notification.NotificationViewModel;
+import interface_adapter.loggedin.settings.SettingsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.loggedin.settings.SettingsButtonController;
 import view.*;
 
 import javax.swing.*;
@@ -20,7 +22,7 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Example");
+        JFrame application = new JFrame("Sign Up");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -41,6 +43,7 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         NotificationViewModel notificationViewModel = new NotificationViewModel();
+        SettingsViewModel settingsViewModel = new SettingsViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -49,6 +52,8 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        SettingsButtonController settingsButtonController = SettingsPressedUseCaseFactory.createSettingsButtonController(viewManagerModel, settingsViewModel);
+      
         WeatherRepository weatherRepository = new WeatherRepository(System.getenv("apiKey"));
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loggedInViewModel);
@@ -57,8 +62,13 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel, weatherRepository, loginViewModel, signupViewModel);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel, weatherRepository, loginViewModel, signupViewModel, settingsButtonController);
+      
         views.add(loggedInView, loggedInView.viewName);
+
+        SettingsView settingsView = SettingsUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+               settingsViewModel, userDataAccessObject);
+        views.add(settingsView);
 
         NotificationView notificationView = new NotificationView(notificationViewModel);
         views.add(notificationView, notificationView.viewName);

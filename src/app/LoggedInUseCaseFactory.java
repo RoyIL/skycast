@@ -8,6 +8,7 @@ import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.loggedin.notification.NotificationController;
 import interface_adapter.loggedin.notification.NotificationPresenter;
 import interface_adapter.loggedin.notification.NotificationViewModel;
+import interface_adapter.loggedin.settings.SettingsButtonController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.login_signup_switch.LoginSignupSwitchController;
 import interface_adapter.login_signup_switch.LoginSignupSwitchPresenter;
@@ -36,13 +37,14 @@ public class LoggedInUseCaseFactory {
 
     public static LoggedInView create(ViewManagerModel viewManager, LoggedInViewModel loggedInViewModel,
                                       NotificationViewModel notificationViewModel,
-                                      WeatherRepository dataAccessInterface, LoginViewModel loginViewModel, SignupViewModel signupViewModel) {
+                                      WeatherRepository dataAccessInterface, LoginViewModel loginViewModel, SignupViewModel signupViewModel,
+                                      SettingsButtonController settingsButtonController) {
         NotificationController notificationController = createNotificationUseCase(viewManager, notificationViewModel);
         LocationLookupController locationLookupController = createLocationLookupUseCase(loggedInViewModel, viewManager, dataAccessInterface);
         WeatherLookupController weatherLookupController = createWeatherLookupUseCase(loggedInViewModel, viewManager, dataAccessInterface);
         LoginSignupSwitchController loginSignupSwitchController = createLoginSignupSwitchUseCase(viewManager, loginViewModel, signupViewModel);
 
-        return new LoggedInView(loggedInViewModel, notificationController, locationLookupController, weatherLookupController, loginSignupSwitchController);
+        return new LoggedInView(loggedInViewModel, notificationController, locationLookupController, weatherLookupController, loginSignupSwitchController, settingsButtonController);
     }
 
     private static NotificationController createNotificationUseCase(ViewManagerModel viewManager, NotificationViewModel notificationViewModel) {
