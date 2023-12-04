@@ -1,4 +1,5 @@
 import data_access.WeatherRepository;
+import entity.Location;
 import org.junit.Test;
 import use_case.location_lookup.*;
 
@@ -41,11 +42,12 @@ public class LocationLookupInteractorTest {
     private static LocationLookupInputBoundary getLocationInputBoundary(LocationLookupDataAccessInterface repo, boolean isFailureExpected, boolean isEmpty) {
         LocationLookupOutputBoundary presenter = new LocationLookupOutputBoundary() {
             @Override
-            public void prepareSuccessView(LocationLookupOutputData data) {
+            public void prepareSuccessView(LocationLookupOutputData rawData) {
                 if(isFailureExpected) {
                     fail("Failure was expected");
                 }
 
+                Location data = rawData.getLocation();
                 assertEquals(data.getName(), "Toronto");
                 assertEquals(data.getRegion(), "Ontario");
                 assertEquals(data.getCountry(), "Canada");

@@ -1,9 +1,13 @@
 package view;
 
+import entity.Location;
+import entity.LocationWeatherData;
+import entity.LocationWeatherForecastData;
+import interface_adapter.location_lookup.LocationLookupController;
 import interface_adapter.loggedin.*;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginState;
 import interface_adapter.loggedin.notification.NotificationController;
+import interface_adapter.login_signup_switch.LoginSignupSwitchController;
+import interface_adapter.weather_lookup.WeatherLookupController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +17,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "logged in";
@@ -39,19 +47,24 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final JLabel bufferField2;
 
     private final LoggedInViewModel loggedInViewModel;
-
     private final NotificationController notificationController;
+    private final LocationLookupController locationLookupController;
+    private final WeatherLookupController weatherLookupController;
+    private final LoginSignupSwitchController loginSignupSwitchController;
     // End of variable declaration
 
     // TODO: ADD ALL USE CASE CONTROLLERS TO INITIALIZER "LoginController controller, "
 
-    public LoggedInView(LoggedInViewModel loggedInViewModel, NotificationController notificationController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel, NotificationController notificationController, LocationLookupController locationLookupController, WeatherLookupController weatherLookupController, LoginSignupSwitchController loginSignupSwitchController) {
         /**
-         * TODO: Impliment basic controler classes for the view functionality
+         * TODO: Implement basic controler classes for the view functionality
          */
 
         this.notificationController = notificationController;
         this.loggedInViewModel = loggedInViewModel;
+        this.locationLookupController = locationLookupController;
+        this.weatherLookupController = weatherLookupController;
+        this.loginSignupSwitchController = loginSignupSwitchController;
         loggedInViewModel.addPropertyChangedListener(this);
 
         // Object creation for visual elements
@@ -82,6 +95,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         logoutButton = new JButton(loggedInViewModel.LOGOUT_BUTTON_TEXT);
         // Output button - no functionality on click
         weatherIconDisplay = new JButton(loggedInViewModel.DEFAULT_DISPLAY_IMG);
+        weatherIconDisplay.setBackground(Color.DARK_GRAY);
 
         // End of object creation for visual elements
 
@@ -92,66 +106,64 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         // Button action listeners
         createNotificationButton.addActionListener(// This creates an anonymous subclass of ActionListener and instantiates it.
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(createNotificationButton)) {
-                        notificationController.execute();
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(createNotificationButton)) {
+                            notificationController.execute();
+                        }
                     }
                 }
-            }
         );
 
         searchButton.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(searchButton)) {
-                        // TODO: ADD CONTROLLER EXECUTE LINE HERE
-                        int i = 0;
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(searchButton)) {
+                            locationLookupController.execute(loggedInViewModel.getWindowState().getCurrentCityName());
+                        }
                     }
                 }
-            }
         );
 
         settingsButton.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(settingsButton)) {
-                        // TODO: ADD CONTROLLER EXECUTE LINE HERE
-                        System.out.println("jaja binks says bonk");
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(settingsButton)) {
+                            // TODO: ADD CONTROLLER EXECUTE LINE HERE
+                            System.out.println("jaja binks says bonk");
+                        }
                     }
                 }
-            }
         );
 
         logoutButton.addActionListener(
-            new ActionListener() {
-                public void actionPerformed(ActionEvent evt) {
-                    if (evt.getSource().equals(logoutButton)) {
-                        // TODO: ADD CONTROLLER EXECUTE LINE HERE
-                        int i = 0;
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(logoutButton)) {
+                            loginSignupSwitchController.execute(true);
+                        }
                     }
                 }
-            }
         );
 
         // Key listener
         citySearchInputField.addKeyListener(
-            new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent e) {
-                    LoggedInState currentState = loggedInViewModel.getWindowState();
-                    currentState.setCurrentCityName(citySearchInputField.getText() + e.getKeyChar());
-                    loggedInViewModel.setWindowState(currentState);
-                }
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        LoggedInState currentState = loggedInViewModel.getWindowState();
+                        currentState.setCurrentCityName(citySearchInputField.getText() + e.getKeyChar());
+                        loggedInViewModel.setWindowState(currentState);
+                    }
 
-                @Override
-                public void keyPressed(KeyEvent e) {
-                }
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
 
-                @Override
-                public void keyReleased(KeyEvent e) {
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
                 }
-            }
         );
 
         // End of listener addition and creation
@@ -204,10 +216,65 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        LoginState state = (LoginState) evt.getNewValue();
-        if (state.getUsernameError() != null) {
-            JOptionPane.showMessageDialog(this, state.getUsernameError());
+        LoggedInState state = (LoggedInState) evt.getNewValue();
+
+        Location currentLocation = state.getCurrentRetrievedLocation();
+        if (currentLocation != null) {
+            String fieldText = currentLocation.getName();
+
+            if (!currentLocation.getRegion().isEmpty()) {
+                fieldText += ", " + currentLocation.getRegion();
+            }
+
+            if (!currentLocation.getCountry().isEmpty()) {
+                fieldText += ", " + currentLocation.getCountry();
+            }
+
+            citySearchInputField.setText(fieldText);
+
+            if(!state.getLocationWeatherDataLatLon().equals(currentLocation.getLat() + "," + currentLocation.getLon()))
+            {
+                loggedInViewModel.getWindowState().setLocationWeatherDataLatLon(currentLocation.getLat() + "," + currentLocation.getLon());
+                weatherLookupController.execute(currentLocation);
+            }
+        } else {
+            citySearchInputField.setText("Location not found!");
+            state.setLocationWeatherData(null);
+        }
+
+        LocationWeatherData currentWeather = state.getLocationWeatherData();
+        if(state.getLocationWeatherData() != null) {
+            currentTemperatureDisplay.setText(Float.toString(currentWeather.getCurrentTempC()) + "°C");
+            precipitationPercentageDisplay.setText(String.valueOf(currentWeather.getDailyChanceOfPrecipitation() + "%"));
+            dailyMaxMinTempsDisplay.setText("("+ currentWeather.getMinDailyTemp() + "°C : " + currentWeather.getMaxDailyTemp() +"°C)");
+
+            String futureDataText = "";
+            for(LocationWeatherForecastData forecast : currentWeather.getWeatherForecast()) {
+                if(forecast == null)
+                    continue;
+
+                String forecastText = "(Day ";
+                forecastText += ChronoUnit.DAYS.between(LocalDate.now(), forecast.getForecastDate());
+                forecastText += ": " + forecast.getForecastMinTempC() + "°C";
+                forecastText += " : " + forecast.getForecastMaxTempC() + "°C";
+                forecastText += ", " + forecast.getForecastChanceOfPrecipitation() + "% Precipitation)";
+                futureDataText += forecastText + " | ";
+            }
+
+            if(futureDataText.length() > 0) {
+                futureDataText = futureDataText.substring(0, futureDataText.length() - 2);
+            }
+
+            futureDataDisplay.setText(futureDataText);
+
+            try {
+                ImageIcon weatherIcon = new ImageIcon(new URL("https:" + currentWeather.getCurrentConditionIconURL()));
+                Image convertImg = weatherIcon.getImage();
+                Image newConvertImage = convertImg.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                weatherIconDisplay.setIcon(new ImageIcon(newConvertImage));
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
-
 }

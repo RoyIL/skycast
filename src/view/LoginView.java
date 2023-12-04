@@ -3,6 +3,7 @@ package view;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.login_signup_switch.LoginSignupSwitchController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class LoginView extends JPanel implements ActionListener, PropertyChangeListener {
+public class LoginView extends JPanel implements PropertyChangeListener {
     public final String viewName = "login";
 
     private final LoginViewModel loginViewModel;
@@ -23,14 +24,16 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     private final JPasswordField passwordInputField = new JPasswordField(15);
 
     private final LoginController loginController;
+    private final LoginSignupSwitchController loginSignupSwitchController;
 
     private final JButton login;
 
     private final JButton cancel;
-    public LoginView(LoginController controller, LoginViewModel loginViewModel) {
+    public LoginView(LoginController controller, LoginViewModel loginViewModel, LoginSignupSwitchController loginSignupSwitchController) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
+        this.loginSignupSwitchController = loginSignupSwitchController;
         loginViewModel.addPropertyChangedListener(this);
 
         JLabel title = new JLabel(loginViewModel.TITLE_BOX);
@@ -58,7 +61,17 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     }
                 }
         );
-        cancel.addActionListener(this);
+
+        cancel.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(cancel)) {
+                            LoginView.this.loginSignupSwitchController.execute(false);
+                        }
+                    }
+                }
+        );
 
         // This makes a new KeyListener implementing class, instantiates it, and
         // makes it listen to keystrokes in the usernameInputField.
@@ -87,13 +100,6 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.add(usernameInfo);
         this.add(passwordInfo);
         this.add(buttons);
-    }
-
-    /**
-     * React to a button click that results in evt.
-     */
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Cancel not implemented yet.");
     }
 
     @Override
