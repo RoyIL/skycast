@@ -9,12 +9,15 @@ import interface_adapter.loggedin.settings.SettingsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import services.TwilioService;
+import use_case.createNotification.CreateNotificationDataAccessInterface;
 import interface_adapter.loggedin.settings.SettingsButtonController;
 import view.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,7 +25,8 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Sign Up");
+        JFrame application = new JFrame("SkyCast");
+      
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -45,6 +49,10 @@ public class Main {
         NotificationViewModel notificationViewModel = new NotificationViewModel();
         SettingsViewModel settingsViewModel = new SettingsViewModel();
 
+        //
+        TwilioService twilioService = new TwilioService();
+        WeatherRepository weatherRepository = new WeatherRepository(System.getenv("api_key"));
+
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv");
@@ -66,11 +74,14 @@ public class Main {
       
         views.add(loggedInView, loggedInView.viewName);
 
+        NotificationView notificationView = CreateNotificationUseCaseFactory.create(userDataAccessObject,
+                weatherRepository, weatherRepository, twilioService,
+                viewManagerModel, loggedInViewModel, notificationViewModel);
+      
         SettingsView settingsView = SettingsUseCaseFactory.create(viewManagerModel, loggedInViewModel,
                settingsViewModel, userDataAccessObject);
         views.add(settingsView);
 
-        NotificationView notificationView = new NotificationView(notificationViewModel);
         views.add(notificationView, notificationView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

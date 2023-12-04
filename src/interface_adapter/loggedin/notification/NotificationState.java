@@ -1,10 +1,13 @@
 package interface_adapter.loggedin.notification;
 
+import java.util.ArrayList;
+
 public class NotificationState {
     // Variable declaration
 
     // String type declarations
     private String cityName = "";
+    private String notificationTime = "";
     private String errorMessage = null;
 
     // Boolean Object declaration
@@ -22,6 +25,7 @@ public class NotificationState {
         wantDailyMaxMin = duplicate.wantDailyMaxMin;
         wantCurrentTemperature = duplicate.wantCurrentTemperature;
         errorMessage = duplicate.errorMessage;
+        notificationTime = duplicate.notificationTime;
     }
 
     // Void initializer
@@ -33,6 +37,7 @@ public class NotificationState {
     // Getter string functions
     public String getCityName() {return cityName;}
     public String getErrorMessage() {return errorMessage;}
+    public String getNotificationTime() {return notificationTime;}
     // Getter boolean functions
     public Boolean getWantPrecipitationChance() {return wantPrecipitationChance;};
     public Boolean getWantDailyMaxMin() {return wantDailyMaxMin;}
@@ -43,6 +48,7 @@ public class NotificationState {
     // Setter string functions
     public void setCityName(String newCityName) {cityName = newCityName;}
     public void setErrorMessage(String errorMessage) {this.errorMessage = errorMessage;}
+    public void setNotificationTime(String notificationTime) {this.notificationTime = notificationTime;}
 
     // Setter boolean Functions
     public void setWantPrecipitationChance(Boolean newBoolValue) {wantPrecipitationChance = newBoolValue;}
