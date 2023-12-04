@@ -13,9 +13,9 @@ public class CreateNotificationController {
     }
 
     public void execute(String cityName, Boolean wantCurrentTemperature, Boolean wantDailyMaxMin,
-                        Boolean wantPrecipitationChance) {
+                        Boolean wantPrecipitationChance, String notificationTime) {
         CreateNotificationInputData createNotificationInputData = new CreateNotificationInputData(cityName,
-                wantCurrentTemperature, wantDailyMaxMin, wantPrecipitationChance);
+                wantCurrentTemperature, wantDailyMaxMin, wantPrecipitationChance, notificationTime);
 
         myCreateNotificationInteractor.execute(createNotificationInputData);
     }
