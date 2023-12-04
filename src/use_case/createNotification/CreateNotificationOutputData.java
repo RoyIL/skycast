@@ -1,2 +1,7 @@
-package use_case.createNotification;public class CreateNotificationOutputData {
+package use_case.createNotification;
+
+public class CreateNotificationOutputData {
+    public CreateNotificationOutputData() {
+
+    }
 }

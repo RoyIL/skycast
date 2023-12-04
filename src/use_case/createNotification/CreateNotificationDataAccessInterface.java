@@ -1,2 +1,4 @@
-package use_case.createNotification;public interface CreateNotificationDataAccessInterface {
+package use_case.createNotification;
+
+public interface CreateNotificationDataAccessInterface {
 }
