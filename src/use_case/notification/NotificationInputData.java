@@ -1,4 +1,4 @@
-package use_case.notifacation;
+package use_case.notification;
 
 public class NotificationInputData {
 
