@@ -18,11 +18,11 @@ public class LoggedInViewModel extends ViewModel {
     public final String CURRENT_TEMPERATURE_DEFAULT_TEXT = "00";
     public final String DAILY_MAX_MIN_DEFAULT_TEXT = "(00:00)";
     public final String DAILY_MAX_MIN_LABEL = "(MAX:MIN) Degrees Celsius";
-    public final String PRECIPITATION_CHANCE_LABEL = "Chance of Percipitation";
+    public final String PRECIPITATION_CHANCE_LABEL = "Chance of Precipitation";
     public final String PRECIPITATION_CHANCE_DEFAULT_TEXT= "00%";
     public final String CURRENT_TEMPERATURE_LABEL = "Current Temperature (Degrees Celsius)";
     public final String FUTURE_DATA_DEFAULT_TEXT = "(0: 00:00, 00%)";
-    public final String FUTURE_DATA_LABEL = "Forecast (Days Out: MAX:MIN, % Rain)";
+    public final String FUTURE_DATA_LABEL = "Forecast (Days Out: MIN:MAX, % Precipitation)";
     public final String LOGOUT_BUTTON_TEXT = "Logout";
     public final String BUFFER_EMPTY_TEXT = "";
 

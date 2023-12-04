@@ -25,8 +25,6 @@ public class WeatherLookupInteractor implements WeatherLookupInputBoundary {
             return;
         }
 
-        presenter.prepareSuccessView(new WeatherLookupOutputData(weatherData.getCurrentTempC(),
-                weatherData.getCurrentCondition(), weatherData.getDailyChanceOfPrecipitation(), weatherData.getMaxDailyTemp(),
-                weatherData.getMinDailyTemp(), weatherData.getWeatherForecast()));
+        presenter.prepareSuccessView(new WeatherLookupOutputData(weatherData));
     }
 }

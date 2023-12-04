@@ -1,6 +1,7 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.WeatherRepository;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.loggedin.notification.NotificationController;
 import interface_adapter.loggedin.notification.NotificationViewModel;
@@ -52,14 +53,17 @@ public class Main {
         }
 
         SettingsButtonController settingsButtonController = SettingsPressedUseCaseFactory.createSettingsButtonController(viewManagerModel, settingsViewModel);
+      
+        WeatherRepository weatherRepository = new WeatherRepository(System.getenv("apiKey"));
 
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loggedInViewModel);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel, settingsButtonController);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel, weatherRepository, loginViewModel, signupViewModel, settingsButtonController);
+      
         views.add(loggedInView, loggedInView.viewName);
 
         SettingsView settingsView = SettingsUseCaseFactory.create(viewManagerModel, loggedInViewModel,
