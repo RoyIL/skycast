@@ -15,7 +15,9 @@ public class SettingsButtonPresenter implements SettingsPressedOutputBoundary {
         this.settingsViewModel = settingsViewModel;
     }
 
-    public void prepareSuccessView() {
+    public void prepareSuccessView(String username) {
+        settingsViewModel.getWindowState().setUsername(username);
+
         viewManagerModel.setActiveView(settingsViewModel.getViewName());
 
         viewManagerModel.firePropertyChanged();

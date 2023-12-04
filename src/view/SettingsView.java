@@ -54,12 +54,7 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
                 new JLabel(settingsViewModel.PASSWORD_INPUT_FIELD), passwordInputField);
         LabelTextPannel phoneNumberInfo = new LabelTextPannel(
                 new JLabel(settingsViewModel.PHONE_NUMBER_INPUT_FIELD), phoneNumberInputField);
-        LabelTextPannel regionInfo = new LabelTextPannel(
-                new JLabel(settingsViewModel.REGION_INPUT_FIELD), regionInputField);
 
-        JPanel buttons = new JPanel();
-        buttons.add(back);
-        buttons.add(enter);
 
         back.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -113,6 +108,14 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
                     public void keyReleased(KeyEvent e) {
                     }
                 });
+
+        this.setLayout(new GridLayout(5, 0));
+
+        this.add(title);
+        this.add(passwordInfo);
+        this.add(phoneNumberInfo);
+        this.add(back);
+        this.add(enter);
 
     }
 

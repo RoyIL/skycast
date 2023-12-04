@@ -60,15 +60,13 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        SettingsButtonController settingsButtonController = SettingsPressedUseCaseFactory.createSettingsButtonController(viewManagerModel, settingsViewModel);
-
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject, loggedInViewModel);
         views.add(signupView, signupView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject, signupViewModel);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel, weatherRepository, loginViewModel, signupViewModel, settingsButtonController);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel, weatherRepository, loginViewModel, signupViewModel, settingsViewModel);
       
         views.add(loggedInView, loggedInView.viewName);
 
@@ -78,7 +76,7 @@ public class Main {
       
         SettingsView settingsView = SettingsUseCaseFactory.create(viewManagerModel, loggedInViewModel,
                settingsViewModel, userDataAccessObject);
-        views.add(settingsView);
+        views.add(settingsView, settingsView.viewName);
 
         views.add(notificationView, notificationView.viewName);
 

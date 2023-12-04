@@ -11,7 +11,7 @@ public class SettingsPressedInteractor implements SettingsPressedInputBoundary {
     }
 
     @Override
-    public void execute() {
-        settingsButtonPresenter.prepareSuccessView();
+    public void execute(String username) {
+        settingsButtonPresenter.prepareSuccessView(username);
     }
 }
