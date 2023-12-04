@@ -1,7 +1,9 @@
 package use_case.createNotification;
 
 public class CreateNotificationOutputData {
-    public CreateNotificationOutputData() {
+    private String message;
 
+    public CreateNotificationOutputData(String message) {
+        this.message = message;
     }
 }
