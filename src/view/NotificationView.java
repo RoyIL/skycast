@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.loggedin.LoggedInState;
+import interface_adapter.loggedin.notification.CreateNotification.CreateNotificationController;
 import interface_adapter.loggedin.notification.NotificationState;
 import interface_adapter.loggedin.notification.NotificationViewModel;
 import interface_adapter.login.LoginState;
@@ -13,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
 
 public class NotificationView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "notif";
@@ -24,7 +26,7 @@ public class NotificationView extends JPanel implements ActionListener, Property
     private final JLabel togglePrecipitationChanceLabel;
     private final JLabel toggleCurrentTemperatureLabel;
     private final JLabel cityNameLabel;
-    private final JLabel phoneNumberLabel;
+    private final JLabel notificationTimeLabel;
     private final JLabel bufferLabel;
 
     private final JButton toggleDailyMaxMinButton;
@@ -34,8 +36,9 @@ public class NotificationView extends JPanel implements ActionListener, Property
     private final JButton cancelNotification;
 
     private final JTextField cityNameInputField;
+    private final JTextField notificationTimeField;
 
-    public NotificationView(NotificationViewModel notificationViewModel) {
+    public NotificationView(NotificationViewModel notificationViewModel, CreateNotificationController createNotificationController) {
         this.notificationViewModel = notificationViewModel;
 
         // Creation of local variables
@@ -71,7 +74,7 @@ public class NotificationView extends JPanel implements ActionListener, Property
         togglePrecipitationChanceLabel = new JLabel(notificationViewModel.TOGGLE_PRECIPITATION_CHANCE_LABEL);
         toggleCurrentTemperatureLabel = new JLabel(notificationViewModel.TOGGLE_CURRENT_TEMPERATURE_LABEL);
         cityNameLabel = new JLabel(notificationViewModel.CITY_NAME_INPUT_LABEL);
-        phoneNumberLabel = new JLabel();
+        notificationTimeLabel = new JLabel(notificationViewModel.NOTIFICATION_TIME_LABEL);
         bufferLabel = new JLabel();
 
         toggleDailyMaxMinButton = new JButton(toggleDailyMaxMinString);
@@ -81,6 +84,8 @@ public class NotificationView extends JPanel implements ActionListener, Property
         cancelNotification = new JButton(notificationViewModel.CANCEL_NOTIFICATION_BUTTON);
 
         cityNameInputField = new JTextField(cityForNotificationString);
+        notificationTimeField = new JTextField();
+        // notificationTimeField.se
 
         cityNameInputField.setText(notificationViewModel.getWindowState().getCityName());
 
@@ -132,6 +137,19 @@ public class NotificationView extends JPanel implements ActionListener, Property
             }
         );
 
+        createNotification.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(createNotification)) {
+                            NotificationState windowState = notificationViewModel.getWindowState();
+                            createNotificationController.execute(windowState.getCityName(),
+                                    windowState.getWantCurrentTemperature(), windowState.getWantDailyMaxMin(),
+                                    windowState.getWantPrecipitationChance(), windowState.getNotificationTime());
+                        }
+                    }
+                }
+        );
+
         cityNameInputField.addKeyListener(
             new KeyListener() {
                 @Override
@@ -152,7 +170,27 @@ public class NotificationView extends JPanel implements ActionListener, Property
             }
         );
 
-        this.setLayout(new GridLayout(6, 2));
+        notificationTimeField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        NotificationState currentState = notificationViewModel.getWindowState();
+                        currentState.setNotificationTime(notificationTimeField.getText() + e.getKeyChar());
+                        notificationViewModel.setWindowState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                }
+        );
+
+        this.setLayout(new GridLayout(7, 2));
 
         //
 
@@ -161,6 +199,9 @@ public class NotificationView extends JPanel implements ActionListener, Property
 
         this.add(cityNameLabel);
         this.add(cityNameInputField);
+
+        this.add(notificationTimeLabel);
+        this.add(notificationTimeField);
 
         this.add(toggleDailyMaxMinLabel);
         this.add(toggleDailyMaxMinButton);
@@ -182,6 +223,9 @@ public class NotificationView extends JPanel implements ActionListener, Property
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         NotificationState state = (NotificationState) evt.getNewValue();
+        if (state.getErrorMessage() != null) {
+            JOptionPane.showMessageDialog(this, state.getErrorMessage());
+        }
     }
 
 }

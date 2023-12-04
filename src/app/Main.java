@@ -1,17 +1,21 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.WeatherRepository;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.loggedin.notification.NotificationController;
 import interface_adapter.loggedin.notification.NotificationViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import interface_adapter.ViewManagerModel;
+import services.TwilioService;
+import use_case.createNotification.CreateNotificationDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class Main {
     public static void main(String[] args) {
@@ -19,7 +23,7 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Example");
+        JFrame application = new JFrame("SkyCast");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -41,6 +45,10 @@ public class Main {
         SignupViewModel signupViewModel = new SignupViewModel();
         NotificationViewModel notificationViewModel = new NotificationViewModel();
 
+        //
+        TwilioService twilioService = new TwilioService();
+        WeatherRepository weatherRepository = new WeatherRepository(System.getenv("api_key"));
+
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv");
@@ -57,7 +65,9 @@ public class Main {
         LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
-        NotificationView notificationView = new NotificationView(notificationViewModel);
+        NotificationView notificationView = CreateNotificationUseCaseFactory.create(userDataAccessObject,
+                weatherRepository, weatherRepository, twilioService,
+                viewManagerModel, loggedInViewModel, notificationViewModel);
         views.add(notificationView, notificationView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
