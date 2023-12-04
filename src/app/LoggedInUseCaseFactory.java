@@ -9,6 +9,8 @@ import interface_adapter.loggedin.notification.NotificationController;
 import interface_adapter.loggedin.notification.NotificationPresenter;
 import interface_adapter.loggedin.notification.NotificationViewModel;
 import interface_adapter.loggedin.settings.SettingsButtonController;
+import interface_adapter.loggedin.settings.SettingsButtonPresenter;
+import interface_adapter.loggedin.settings.SettingsViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.login_signup_switch.LoginSignupSwitchController;
 import interface_adapter.login_signup_switch.LoginSignupSwitchPresenter;
@@ -25,6 +27,9 @@ import use_case.login_signup_switch.LoginSignupSwitchOutputBoundary;
 import use_case.notifacation.NotificationInputBoundary;
 import use_case.notifacation.NotificationInteractor;
 import use_case.notifacation.NotificationOutputBoundary;
+import use_case.settings_pressed.SettingsPressedInputBoundary;
+import use_case.settings_pressed.SettingsPressedInteractor;
+import use_case.settings_pressed.SettingsPressedOutputBoundary;
 import use_case.weather_lookup.WeatherLookupDataAccessInterface;
 import use_case.weather_lookup.WeatherLookupInputBoundary;
 import use_case.weather_lookup.WeatherLookupInteractor;
@@ -38,11 +43,12 @@ public class LoggedInUseCaseFactory {
     public static LoggedInView create(ViewManagerModel viewManager, LoggedInViewModel loggedInViewModel,
                                       NotificationViewModel notificationViewModel,
                                       WeatherRepository dataAccessInterface, LoginViewModel loginViewModel, SignupViewModel signupViewModel,
-                                      SettingsButtonController settingsButtonController) {
+                                      SettingsViewModel settingsViewModel) {
         NotificationController notificationController = createNotificationUseCase(viewManager, notificationViewModel);
         LocationLookupController locationLookupController = createLocationLookupUseCase(loggedInViewModel, viewManager, dataAccessInterface);
         WeatherLookupController weatherLookupController = createWeatherLookupUseCase(loggedInViewModel, viewManager, dataAccessInterface);
         LoginSignupSwitchController loginSignupSwitchController = createLoginSignupSwitchUseCase(viewManager, loginViewModel, signupViewModel);
+        SettingsButtonController settingsButtonController = createSettingsButtonController(viewManager, settingsViewModel);
 
         return new LoggedInView(loggedInViewModel, notificationController, locationLookupController, weatherLookupController, loginSignupSwitchController, settingsButtonController);
     }
@@ -77,5 +83,12 @@ public class LoggedInUseCaseFactory {
         LoginSignupSwitchInputBoundary inputBoundary = new LoginSignupSwitchInteractor(outputBoundary);
 
         return new LoginSignupSwitchController(inputBoundary);
+    }
+
+    private static SettingsButtonController createSettingsButtonController(ViewManagerModel viewManager, SettingsViewModel settingsViewModel) {
+        SettingsPressedOutputBoundary settingsPressedOutputBoundary = new SettingsButtonPresenter(viewManager, settingsViewModel);
+        SettingsPressedInputBoundary settingsPressedInteractor = new SettingsPressedInteractor(settingsPressedOutputBoundary);
+
+        return new SettingsButtonController(settingsPressedInteractor);
     }
 }
