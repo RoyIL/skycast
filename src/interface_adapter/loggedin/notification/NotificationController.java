@@ -1,7 +1,7 @@
 package interface_adapter.loggedin.notification;
 
-import use_case.notifacation.NotificationInputBoundary;
-import use_case.notifacation.NotificationInputData;
+import use_case.notification.NotificationInputBoundary;
+import use_case.notification.NotificationInputData;
 
 public class NotificationController {
     // Variable declaration creating an instance to call the execute function

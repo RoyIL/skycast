@@ -4,14 +4,9 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.loggedin.notification.CreateNotification.CreateNotificationController;
 import interface_adapter.loggedin.notification.CreateNotification.CreateNotificationPresenter;
-import interface_adapter.loggedin.notification.NotificationController;
-import interface_adapter.loggedin.notification.NotificationPresenter;
 import interface_adapter.loggedin.notification.NotificationViewModel;
 import use_case.createNotification.*;
 import use_case.location_lookup.LocationLookupDataAccessInterface;
-import use_case.notifacation.NotificationInputBoundary;
-import use_case.notifacation.NotificationInteractor;
-import use_case.notifacation.NotificationOutputBoundary;
 import use_case.weather_lookup.WeatherLookupDataAccessInterface;
 import view.NotificationView;
 

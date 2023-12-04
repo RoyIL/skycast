@@ -1,4 +1,4 @@
-package use_case.notifacation;
+package use_case.notification;
 
 public interface NotificationInputBoundary {
     void execute(NotificationInputData notificationInputData);
