@@ -20,7 +20,7 @@ public class CreateNotificationPresenter implements CreateNotificationOutputBoun
     }
 
     @Override
-    public void prepareSuccessView(CreateNotificationOutputData successMessage) {
+    public void prepareSuccessView() {
         viewManagerModel.setActiveView(loggedInViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
