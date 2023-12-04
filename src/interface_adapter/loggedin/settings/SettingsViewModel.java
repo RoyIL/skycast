@@ -10,7 +10,6 @@ public class SettingsViewModel extends ViewModel{
     public static final String TITLE_BOX = "Settings";
     public static final String PASSWORD_INPUT_FIELD = "Change Password";
     public static final String PHONE_NUMBER_INPUT_FIELD = "Change Phone Number";
-    public static final String REGION_INPUT_FIELD = "Change Region ";
     public static final String ENTER = "Enter";
     public static final String BACK_BUTTON = "Back";
 

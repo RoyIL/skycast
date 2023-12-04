@@ -24,10 +24,8 @@ public class SettingsUseCaseFactory {
 
     private static SettingsController createSettingsUseCase(ViewManagerModel viewManagerModel, LoggedInViewModel loggedInViewModel,
                                                             SettingsViewModel settingsViewModel, SetSettingsDataAccessInterface accessObject) {
-        LoggedInState loggedInState = loggedInViewModel.getWindowState();
-        UsernameInputData inputData = new UsernameInputData(loggedInState.getUsername());
         SetSettingsOutputBoundary outputBoundary = new SettingsPresenter(settingsViewModel, viewManagerModel);
-        SetSettingsInputBoundary inputBoundary = new SetSettingsInteractor(accessObject, outputBoundary, inputData);
+        SetSettingsInputBoundary inputBoundary = new SetSettingsInteractor(accessObject, outputBoundary);
 
         return new SettingsController(inputBoundary);
     }

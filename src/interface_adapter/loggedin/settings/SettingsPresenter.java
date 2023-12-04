@@ -23,10 +23,12 @@ public class SettingsPresenter implements SetSettingsOutputBoundary{
         SettingsState settingsState = settingsViewModel.getWindowState();
         settingsState.setPassword(output.getNewPassword());
         settingsState.setPhoneNumber(output.getNewPhoneNumber());
+
         this.settingsViewModel.setWindowState(settingsState);
         this.settingsViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(settingsViewModel.getViewName());
+        System.out.println(output.getNewPhoneNumber());
         this.viewManagerModel.firePropertyChanged();
     }
 

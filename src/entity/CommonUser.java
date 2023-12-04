@@ -11,7 +11,7 @@ public class CommonUser implements User {
         username = inpUsername;
         password = inpPassword;
         creationTime = inpCreationTime;
-        phoneNumber = "None";
+        phoneNumber = inpPhoneNumber;
     }
     @Override
     public String getUsername() {
