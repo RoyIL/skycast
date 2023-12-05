@@ -18,17 +18,18 @@ public class SettingsPresenter implements SetSettingsOutputBoundary{
         this.viewManagerModel = viewManagerModel;
         this.settingsViewModel = settingsViewModel;
     }
+
     @Override
     public void prepareSuccessView(SetSettingsOutputData output) {
         SettingsState settingsState = settingsViewModel.getWindowState();
         settingsState.setPassword(output.getNewPassword());
         settingsState.setPhoneNumber(output.getNewPhoneNumber());
+        settingsState.setPhoneNumberError(null);
 
         this.settingsViewModel.setWindowState(settingsState);
         this.settingsViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(settingsViewModel.getViewName());
-        System.out.println(output.getNewPhoneNumber());
         this.viewManagerModel.firePropertyChanged();
     }
 

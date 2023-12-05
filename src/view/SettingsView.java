@@ -20,8 +20,8 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "settings";
     private final JButton back;
     private final JButton enter;
-    private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JTextField phoneNumberInputField = new JTextField(10);
+    private JPasswordField passwordInputField = new JPasswordField(15);
+    private JTextField phoneNumberInputField = new JTextField(10);
     private final SettingsViewModel settingsViewModel;
     private final SettingsController settingsController;
     private ViewManagerModel viewManagerModel;
@@ -78,25 +78,27 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
         passwordInputField.addKeyListener(
                 new KeyListener() {
                     @Override
-                    public void keyTyped(KeyEvent e) {
-                        newPassword += e.getKeyChar();
-                    }
-
-                    @Override
                     public void keyPressed(KeyEvent e) {
                     }
 
                     @Override
                     public void keyReleased(KeyEvent e) {
                     }
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        if (!(e.getKeyChar() == '\b')) {
+                            newPassword += e.getKeyChar();
+                        }
+                        else {
+                            newPassword = String.valueOf(passwordInputField.getPassword());
+                        }
+                    }
+
+
                 });
 
         phoneNumberInputField.addKeyListener(
                 new KeyListener() {
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        newPhoneNumber += e.getKeyChar();
-                    }
 
                     @Override
                     public void keyPressed(KeyEvent e) {
@@ -104,6 +106,17 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
 
                     @Override
                     public void keyReleased(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        if (!(e.getKeyChar() == '\b')) {
+                            newPhoneNumber += e.getKeyChar();
+                        }
+                        else {
+                            newPhoneNumber = phoneNumberInputField.getText();
+                        }
+
                     }
                 });
 
@@ -126,6 +139,12 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
         SettingsState state = (SettingsState) evt.getNewValue();
         if (state.getPhoneNumberError() != null) {
             JOptionPane.showMessageDialog(this, state.getPhoneNumberError());
+        }
+        else {
+            JOptionPane.showMessageDialog(this,
+                    "New phone number: " + state.getPhoneNumber() +
+                            ", New password" + state.getPassword());
+
         }
     }
 }
