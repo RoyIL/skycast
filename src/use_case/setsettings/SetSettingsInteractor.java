@@ -19,8 +19,6 @@ public class SetSettingsInteractor implements SetSettingsInputBoundary{
     private String oldPhoneNumber;
     private SetSettingsOutputBoundary settingsPresenter;
     private Pattern pattern = Pattern.compile("^\\d{10}$");
-    private Matcher matcher;
-    private SetSettingsOutputData outputData;
     private String username;
 
     private SetSettingsDataAccessInterface accessObject;
@@ -36,9 +34,6 @@ public class SetSettingsInteractor implements SetSettingsInputBoundary{
         newPhoneNumber = setSettingsInputData.getNewPhoneNumber();
         oldPassword = accessObject.get(username).getPassword();
         oldPhoneNumber = accessObject.get(username).getPhoneNumber();
-        // Testing
-        System.out.println(username + ", " + oldPassword + ", " + oldPhoneNumber);
-        System.out.println(username + ", " + newPassword + ", " + newPhoneNumber);
 
         Matcher matcher = pattern.matcher(newPhoneNumber);
         if (!matcher.matches() && !newPhoneNumber.isBlank()) {

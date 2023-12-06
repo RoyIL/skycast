@@ -10,8 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -44,8 +42,10 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
 
         JLabel title = new JLabel(settingsViewModel.TITLE_BOX);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         back = new JButton(settingsViewModel.BACK_BUTTON);
         enter = new JButton(settingsViewModel.ENTER);
+
         LabelTextPannel passwordInfo = new LabelTextPannel(
                 new JLabel(settingsViewModel.PASSWORD_INPUT_FIELD), passwordInputField);
         LabelTextPannel phoneNumberInfo = new LabelTextPannel(
@@ -69,70 +69,32 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(enter)) {
                             settingsController.execute(settingsViewModel.getWindowState().getUsername(),
-                                    newPassword, newPhoneNumber);
+                                    passwordInputField.getText(), phoneNumberInputField.getText());
                         }
                     }
                 }
         );
 
-        passwordInputField.addKeyListener(
-                new KeyListener() {
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                    }
-
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                    }
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        if (!(e.getKeyChar() == '\b')) {
-                            newPassword += e.getKeyChar();
-                        }
-                        else {
-                            newPassword = String.valueOf(passwordInputField.getPassword());
-                        }
-                    }
-
-
-                });
-
-        phoneNumberInputField.addKeyListener(
-                new KeyListener() {
-
-                    @Override
-                    public void keyPressed(KeyEvent e) {
-                    }
-
-                    @Override
-                    public void keyReleased(KeyEvent e) {
-                    }
-
-                    @Override
-                    public void keyTyped(KeyEvent e) {
-                        if (!(e.getKeyChar() == '\b')) {
-                            newPhoneNumber += e.getKeyChar();
-                        }
-                        else {
-                            newPhoneNumber = phoneNumberInputField.getText();
-                        }
-
-                    }
-                });
 
         this.setLayout(new GridLayout(5, 0));
+
+        JPanel buttons = new JPanel();
+        buttons.add(back);
+        buttons.add(enter);
 
         this.add(title);
         this.add(passwordInfo);
         this.add(phoneNumberInfo);
-        this.add(back);
-        this.add(enter);
-
+        this.add(buttons);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource().equals(enter)) {
+
+        }
     }
+
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -143,7 +105,7 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
         else {
             JOptionPane.showMessageDialog(this,
                     "New phone number: " + state.getPhoneNumber() +
-                            ", New password" + state.getPassword());
+                            ", New password: " + state.getPassword());
 
         }
     }
