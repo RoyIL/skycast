@@ -102,11 +102,5 @@ public class SettingsView extends JPanel implements ActionListener, PropertyChan
         if (state.getPhoneNumberError() != null) {
             JOptionPane.showMessageDialog(this, state.getPhoneNumberError());
         }
-        else {
-            JOptionPane.showMessageDialog(this,
-                    "New phone number: " + state.getPhoneNumber() +
-                            ", New password: " + state.getPassword());
-
-        }
     }
 }
