@@ -289,6 +289,108 @@ public class SettingsViewTest {
 
     }
 
+    @org.junit.Test
+    public void SetSettingsPhoneNumberBlank (){
+        Main.main(null);
+
+        JButton signUpButton = getSignUpButton();
+
+        String username = "testuser_";
+        String phoneNumber = "6472982945";
+
+        while(fudao.exists(username)) {
+            username += "1";
+        }
+
+        fillInSignupFields(username, "testPassword", "testPassword");
+
+        signUpButton.doClick();
+
+        JButton settingsButton = getSettingsButton();
+        settingsButton.doClick();
+
+        fillInSettingsFields("testPassword", phoneNumber);
+
+        JButton enterButton = getEnterButton();
+        enterButton.doClick();
+
+        fillInSettingsFields("testPassword2", "   ");
+        enterButton.doClick();
+
+        refreshDb();
+
+        User user = fudao.get(username);
+        assert (user.getPassword().equals("testPassword2") && user.getPhoneNumber().equals(phoneNumber));
+    }
+
+    @org.junit.Test
+    public void SetSettingsPasswordBlank () {
+        Main.main(null);
+
+        JButton signUpButton = getSignUpButton();
+
+        String username = "testuser_";
+        String phoneNumber = "6472982945";
+        String newPhoneNumber = "6472982946";
+
+        while(fudao.exists(username)) {
+            username += "1";
+        }
+
+        fillInSignupFields(username, "testPassword", "testPassword");
+
+        signUpButton.doClick();
+
+        JButton settingsButton = getSettingsButton();
+        settingsButton.doClick();
+
+        fillInSettingsFields("testPassword", phoneNumber);
+
+        JButton enterButton = getEnterButton();
+        enterButton.doClick();
+
+        fillInSettingsFields("  ", newPhoneNumber);
+        enterButton.doClick();
+
+        refreshDb();
+
+        User user = fudao.get(username);
+        assert (user.getPassword().equals("testPassword") && user.getPhoneNumber().equals(newPhoneNumber));
+    }
+
+    @org.junit.Test
+    public void SetSettingsAllBlank () {
+        Main.main(null);
+
+        JButton signUpButton = getSignUpButton();
+
+        String username = "testuser_";
+        String phoneNumber = "6472982945";
+
+        while(fudao.exists(username)) {
+            username += "1";
+        }
+
+        fillInSignupFields(username, "testPassword", "testPassword");
+
+        signUpButton.doClick();
+
+        JButton settingsButton = getSettingsButton();
+        settingsButton.doClick();
+
+        fillInSettingsFields("", phoneNumber);
+
+        JButton enterButton = getEnterButton();
+        enterButton.doClick();
+
+        fillInSettingsFields("  ", "  ");
+        enterButton.doClick();
+
+        refreshDb();
+
+        User user = fudao.get(username);
+        assert (user.getPassword().equals("testPassword") && user.getPhoneNumber().equals(phoneNumber));
+    }
 }
 
 
