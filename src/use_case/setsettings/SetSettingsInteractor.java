@@ -19,8 +19,6 @@ public class SetSettingsInteractor implements SetSettingsInputBoundary{
     private String oldPhoneNumber;
     private SetSettingsOutputBoundary settingsPresenter;
     private Pattern pattern = Pattern.compile("^\\d{10}$");
-    private Matcher matcher;
-    private SetSettingsOutputData outputData;
     private String username;
 
     private SetSettingsDataAccessInterface accessObject;
@@ -34,29 +32,35 @@ public class SetSettingsInteractor implements SetSettingsInputBoundary{
         username = setSettingsInputData.getUsername();
         newPassword = setSettingsInputData.getNewPassword();
         newPhoneNumber = setSettingsInputData.getNewPhoneNumber();
-        accessObject.get(username).getPassword();
-        accessObject.get(username).getPhoneNumber();
+        oldPassword = accessObject.get(username).getPassword();
+        oldPhoneNumber = accessObject.get(username).getPhoneNumber();
 
         Matcher matcher = pattern.matcher(newPhoneNumber);
-
-        if (!matcher.matches() && !newPhoneNumber.isEmpty()) {
+        if (!matcher.matches() && !newPhoneNumber.isBlank()) {
             settingsPresenter.prepareFailView("Phone Number must be in the form XXXXXXXXXX");
-        } else if (newPassword.isEmpty() && !newPhoneNumber.isEmpty()) {
+        }
+        else if (newPassword.isBlank() && !newPhoneNumber.isBlank()) {
             CommonUser user = new CommonUser(username, oldPassword, LocalDateTime.now(), newPhoneNumber);
             accessObject.save(user);
             SetSettingsOutputData outputData = new SetSettingsOutputData(oldPassword, newPhoneNumber);
             settingsPresenter.prepareSuccessView(outputData);
-        } else if (!newPassword.isEmpty() && newPhoneNumber.isEmpty()) {
+            return;
+        }
+        else if (!newPassword.isBlank() && newPhoneNumber.isBlank()) {
             CommonUser user = new CommonUser(username, newPassword, LocalDateTime.now(), oldPhoneNumber);
             accessObject.save(user);
             SetSettingsOutputData outputData = new SetSettingsOutputData(newPassword, oldPhoneNumber);
             settingsPresenter.prepareSuccessView(outputData);
-        } else if (!newPassword.isEmpty()) {
+            return;
+        }
+        else if (!newPassword.isBlank()) {
             CommonUser user = new CommonUser(username, newPassword, LocalDateTime.now(), newPhoneNumber);
             accessObject.save(user);
             SetSettingsOutputData outputData = new SetSettingsOutputData(newPassword, newPhoneNumber);
             settingsPresenter.prepareSuccessView(outputData);
-        } else {
+            return;
+        }
+        else {
             settingsPresenter.prepareSuccessView(new SetSettingsOutputData(oldPassword, oldPhoneNumber));
 
         }

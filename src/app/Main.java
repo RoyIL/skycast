@@ -67,17 +67,15 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel , notificationViewModel, weatherRepository, loginViewModel, signupViewModel, settingsViewModel);
-      
         views.add(loggedInView, loggedInView.viewName);
 
-        NotificationView notificationView = CreateNotificationUseCaseFactory.create(userDataAccessObject,
-                weatherRepository, weatherRepository, twilioService,
-                viewManagerModel, loggedInViewModel, notificationViewModel);
-      
         SettingsView settingsView = SettingsUseCaseFactory.create(viewManagerModel, loggedInViewModel,
                settingsViewModel, userDataAccessObject);
         views.add(settingsView, settingsView.viewName);
 
+        NotificationView notificationView = CreateNotificationUseCaseFactory.create(userDataAccessObject,
+                weatherRepository, weatherRepository, twilioService,
+                viewManagerModel, loggedInViewModel, notificationViewModel);
         views.add(notificationView, notificationView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);
