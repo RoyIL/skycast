@@ -7,7 +7,6 @@ import use_case.setsettings.SetSettingsInteractor;
 import use_case.setsettings.SetSettingsOutputBoundary;
 import use_case.setsettings.SetSettingsInputBoundary;
 import use_case.setsettings.SetSettingsDataAccessInterface;
-import use_case.setsettings.UsernameInputData;
 import view.SettingsView;
 import interface_adapter.loggedin.settings.SettingsViewModel;
 import interface_adapter.loggedin.settings.SettingsPresenter;
